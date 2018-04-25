@@ -1,115 +1,106 @@
-set termguicolors
+" reset vim
+set all&
+mapc   " nvo
+xmapc
+smapc
+mapc!  " ci
+lmapc
+tmapc
+highlight clear
 
-" # Plugins
-call plug#begin()
-
-" ## General
-Plug 'junegunn/fzf'
+call plug#begin('~/.local/share/nvim/plugged')
 Plug 'godlygeek/tabular'
-Plug 'mhartington/oceanic-next'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
-" ## Git
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-
-" ## Programming
-Plug 'Shougo/deoplete.nvim'
-Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
+Plug 'tpope/vim-surround'
 Plug 'w0rp/ale'
+Plug 'easymotion/vim-easymotion'
 
-Plug 'eagletmt/neco-ghc'
-Plug 'neovimhaskell/haskell-vim'
-Plug 'raichoo/purescript-vim'
 Plug 'idris-hackers/idris-vim'
-
+Plug 'neovimhaskell/haskell-vim'
+Plug 'purescript-contrib/purescript-vim'
 call plug#end()
 
+colorscheme desert
+highlight TabLine gui=NONE guibg=grey10 guifg=grey40
+highlight TabLineSel gui=NONE guibg=grey20
+highlight TabLineFill gui=NONE guibg=grey10
+highlight ColorColumn guibg=grey16
+highlight VertSplit guifg=yellow guibg=grey20
+highlight StatusLine guifg=grey10 guibg=yellow gui=bold
+highlight StatusLineNC guifg=yellow guibg=grey10 gui=bold
+highlight EndOfBuffer guibg=black
 
-" # General
+let g:haskell_indent_disable=1
 
-set autoindent
+set autoread
+set backspace=eol,indent,start
+set backupdir=$HOME/.vim/backups
+set bufhidden=hide
+set colorcolumn=+1
+set completeopt+=menuone,longest
+set confirm
+set copyindent
+set cursorcolumn
+set cursorline
+set directory=$HOME/.vim/swapfiles
+set display=lastline
+set eadirection=both
+set encoding=utf-8
+set expandtab
+set formatoptions+=n
+set grepprg=rg\ --vimgrep
+set hidden
 set history=1000
+set hlsearch
 set incsearch
-set mouse=a
-set nocompatible
+set laststatus=2
+set list
+set listchars+=tab:>\ ,trail:-,eol:ϟ
+set noautoindent
 set nowrap
 set number
 set relativenumber
-set showmode
-set smartcase
+set ruler
+set shiftround
+set shiftwidth=2
+set shortmess+=I
+set showcmd
+set showmatch
+set smarttab
 set softtabstop=2
-set sw=2
-set ts=2
-set tw=0 " 79
-set completeopt=menuone,menu,longest
-set wildignore+=.git,.stack-work,*-doc-http.html,bower_components,node_modules
-set wildmode=longest,list,full
-set cmdheight=1
 set spell spelllang=en_gb
+set splitbelow
+set splitright
+set suffixes+=.git,.stack-work,-doc-http.html
+set tabstop=2
+set termguicolors
+set ttyfast
+set wildignore+=.git,.stack-work,*-doc-http.html,bower_components,node_modules
+set wildmenu
+set wildmode+=list,longest
 
-" ## Breaking habits :-)
-
-noremap  <Up>    <NOP>
-vnoremap <Up>    <NOP>
-noremap  <Down>  <NOP>
-vnoremap <Down>  <NOP>
-noremap  <Left>  <NOP>
-vnoremap <Left>  <NOP>
-noremap  <Right> <NOP>
-vnoremap <Right> <NOP>
-
-noremap  <Up>    ""
-noremap! <Up>    <Nop>
-noremap  <Down>  ""
-noremap! <Down>  <Nop>
-noremap  <Left>  ""
-noremap! <Left>  <Nop>
-noremap  <Right> ""
-noremap! <Right> <Nop>
-
-" ## Swap files and backups
-set directory=$HOME/.vim/swapfiles//
-set nobackup
-set nowritebackup
-
-" ## Grep updates
-set grepprg=ag\ --nogroup\ --nocolor
 map <Leader>s :grep<Space>
+nnoremap <C-Space> :Buffers<CR>
+nnoremap <C-e> :Files<CR>
+nnoremap <C-s> :Files %:p:h<CR>
+nnoremap <C-g>b :BCommits<CR>
+nnoremap <C-g>g :Commits<CR>
+nnoremap <silent> <C-N> :cn<CR>zv
+nnoremap <silent> <C-P> :cp<CR>zv
 
-" ## Whitespace
-map <Leader>c H:%s/\s*$//g<CR>:noh<CR><C-o>zt<C-o>
-set listchars=nbsp:☠,tab:▸␣,tab:>-,trail:~,extends:>,precedes:<
-set list
-
-" # Programming
-map <Leader>p :FZF<CR>
-
-" Fix problems with crontab backups.
-autocmd filetype crontab setlocal nobackup nowritebackup
-
-" ## Grep browsing
-nmap <silent> <C-N> :cn<CR>zv
-nmap <silent> <C-P> :cp<CR>zv
-
-" ## Haskell
-let $PATH=$PATH . ':' . expand('~/.local/bin')
-
-" Align import statements (tabulate AROUND the module name)
-vmap <silent> <Leader>a :Tabularize/^[^A-Z]*\zs[A-Z][a-zA-Z0-9\\.]*<CR>
-
-
-" # Syntax
-syntax enable
-let g:oceanic_next_terminal_bold=1
-let g:oceanic_next_terminal_italic=1
-colorscheme OceanicNext
-
-
-" ## Pane control
+vmap <silent> <Leader>a :'<,'>Tabularize/^[^A-Z]*\zs[A-Z][a-zA-Z\\.]*<CR>
+nmap <silent> <Leader>x :call fzf#run({ 'source': 'stack ghc -- --supported-languages', 'sink': {lp -> append(0, "{-# LANGUAGE " . lp . " #-}")}, 'down': '20%' })<CR>
 
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 
-set expandtab
+nmap <silent> <C-g>n :tabn<CR>
+nmap <silent> <C-g>p :tabN<CR>
+nmap <silent> <C-g><C-n> :tabm +1<CR>
+nmap <silent> <C-g><C-p> :tabm -1<CR>
+
