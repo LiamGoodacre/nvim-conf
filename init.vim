@@ -24,10 +24,12 @@ highlight TabLine gui=NONE guibg=grey10 guifg=grey40
 highlight TabLineSel gui=NONE guibg=grey20
 highlight TabLineFill gui=NONE guibg=grey10
 highlight ColorColumn guibg=grey16
-highlight VertSplit guifg=yellow guibg=grey20
-highlight StatusLine guifg=grey10 guibg=yellow gui=bold
-highlight StatusLineNC guifg=yellow guibg=grey10 gui=bold
+highlight VertSplit guifg=white guibg=grey20
+highlight StatusLine guifg=grey10 guibg=white gui=bold
+highlight StatusLineNC guifg=white guibg=grey10 gui=bold
 highlight EndOfBuffer guibg=black
+highlight CursorLineNr guibg=white guifg=black
+highlight LineNr guibg=black guifg=white
 
 let g:haskell_indent_disable=1
 
