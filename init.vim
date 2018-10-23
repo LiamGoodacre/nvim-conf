@@ -12,15 +12,11 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'godlygeek/tabular'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'w0rp/ale'
 Plug 'easymotion/vim-easymotion'
-
-Plug 'idris-hackers/idris-vim'
 Plug 'neovimhaskell/haskell-vim'
-Plug 'purescript-contrib/purescript-vim'
+"Plug 'purescript-contrib/purescript-vim'
 call plug#end()
 
 colorscheme desert
@@ -69,7 +65,6 @@ set shiftwidth=2
 set shortmess+=I
 set showcmd
 set showmatch
-set smarttab
 set softtabstop=2
 set spell spelllang=en_gb
 set splitbelow
@@ -84,15 +79,12 @@ set wildmode+=list,longest
 
 map <Leader>s :grep<Space>
 nnoremap <C-Space> :Buffers<CR>
-nnoremap <C-e> :Files<CR>
+nnoremap <C-e> :GFiles<CR>
 nnoremap <C-s> :Files %:p:h<CR>
 nnoremap <C-g>b :BCommits<CR>
 nnoremap <C-g>g :Commits<CR>
 nnoremap <silent> <C-N> :cn<CR>zv
 nnoremap <silent> <C-P> :cp<CR>zv
-
-vmap <silent> <Leader>a :'<,'>Tabularize/^[^A-Z]*\zs[A-Z][a-zA-Z\\.]*<CR>
-nmap <silent> <Leader>x :call fzf#run({ 'source': 'stack ghc -- --supported-languages', 'sink': {lp -> append(0, "{-# LANGUAGE " . lp . " #-}")}, 'down': '20%' })<CR>
 
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
@@ -103,4 +95,3 @@ nmap <silent> <C-g>n :tabn<CR>
 nmap <silent> <C-g>p :tabN<CR>
 nmap <silent> <C-g><C-n> :tabm +1<CR>
 nmap <silent> <C-g><C-p> :tabm -1<CR>
-
