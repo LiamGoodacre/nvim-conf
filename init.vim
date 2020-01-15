@@ -16,9 +16,15 @@ Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
 Plug 'neovimhaskell/haskell-vim'
 " Plug 'purescript-contrib/purescript-vim'
-Plug 'FrigoEU/psc-ide-vim'
+" Plug 'FrigoEU/psc-ide-vim'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'leafgarland/typescript-vim'
+" Plug 'Quramy/tsuquyomi'
 call plug#end()
+
+let g:typescript_indent_disable = 1
+
+set directory=~/.local/share/nvim/swap/
 
 set completeopt+=menuone,noinsert,noselect
 set confirm
