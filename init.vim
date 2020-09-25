@@ -1,5 +1,5 @@
 " reset vim
-set all&
+" set all&
 mapc " nvo
 xmapc
 smapc
@@ -15,14 +15,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
 Plug 'neovimhaskell/haskell-vim'
-" Plug 'purescript-contrib/purescript-vim'
-" Plug 'FrigoEU/psc-ide-vim'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'leafgarland/typescript-vim'
-" Plug 'Quramy/tsuquyomi'
 call plug#end()
-
-let g:typescript_indent_disable = 1
 
 set directory=~/.local/share/nvim/swap/
 
@@ -32,20 +26,16 @@ set cursorcolumn
 set cursorline
 set expandtab
 set formatoptions+=n
-set grepprg=ripgrep.rg\ --vimgrep
 set hidden
-set incsearch
 set list
 set listchars+=tab:\ \ ,trail:\ 
 set noautoindent
 set nowrap
 set number
 set relativenumber
-set ruler
 set shiftround
 set shiftwidth=2
 set shortmess+=I
-set showcmd
 set showmatch
 set softtabstop=2
 set spell spelllang=en_gb
@@ -53,15 +43,15 @@ set splitbelow
 set splitright
 set suffixes+=.git,.stack-work,-doc-http.html
 set tabstop=2
-set termguicolors
-set ttyfast
 set wildignore+=.git,.stack-work,*-doc-http.html,bower_components,node_modules
-set wildmenu
 set wildmode+=list,longest
 set foldmethod=marker
 
+"set grepprg=ripgrep.rg\ --vimgrep
+"set termguicolors
+
 set background=dark
-colorscheme evening
+" colorscheme evening
 highlight Conceal guifg=#ffffff guibg=#000000
 
 nnoremap <C-Space> :Buffers<CR>
@@ -87,5 +77,5 @@ function! AlwaysUpdate()
   au CursorHold,CursorHoldI <buffer> :update
 endfunction
 
+let g:typescript_indent_disable = 1
 let g:haskell_indent_disable=1
-
