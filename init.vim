@@ -1,12 +1,12 @@
 " reset vim
 " set all&
-mapc " nvo
-xmapc
-smapc
-mapc! " ci
-lmapc
-tmapc
-highlight clear
+" mapc " nvo
+" xmapc
+" smapc
+" mapc! " ci
+" lmapc
+" tmapc
+" highlight clear
 
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -16,10 +16,13 @@ Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'leafgarland/typescript-vim'
+" Plug 'Quramy/tsuquyomi'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 set directory=~/.local/share/nvim/swap/
 
+set mouse=a
 set completeopt+=menuone,noinsert,noselect
 set confirm
 set cursorcolumn
@@ -38,7 +41,8 @@ set shiftwidth=2
 set shortmess+=I
 set showmatch
 set softtabstop=2
-set spell spelllang=en_gb
+set spelllang=en_gb
+set nospell
 set splitbelow
 set splitright
 set suffixes+=.git,.stack-work,-doc-http.html
@@ -50,9 +54,9 @@ set foldmethod=marker
 "set grepprg=ripgrep.rg\ --vimgrep
 "set termguicolors
 
-set background=dark
+" set background=dark
 " colorscheme evening
-highlight Conceal guifg=#ffffff guibg=#000000
+" highlight Conceal guifg=#ffffff guibg=#000000
 
 nnoremap <C-Space> :Buffers<CR>
 nnoremap <C-e> :GFiles<CR>
