@@ -36,6 +36,7 @@ return {
         "passwd",
         "purescript",
         "python",
+        "query",
         "regex",
         "rst",
         "scss",
