@@ -41,5 +41,38 @@ return {
     vim.keymap.set("n", "<leader>lr", telescope.lsp_references, {})
     vim.keymap.set("n", "<leader>lt", telescope.lsp_type_definitions, {})
     vim.keymap.set("n", "<leader>ld", telescope.lsp_definitions, {})
+
+    local function Tsq_command(opts, query, command)
+      local bufnr = vim.api.nvim_get_current_buf()
+      local parser = vim.treesitter.get_parser(bufnr)
+      local tree = parser:parse()[1]
+      local root = tree:root()
+      local query_obj = vim.treesitter.query.parse(vim.bo.filetype, query)
+
+      local coords = {}
+      for _, node in query_obj:iter_captures(root, bufnr, opts.line1 - 1, opts.line2) do
+        local start_row, start_col, _, _ = node:range()
+        table.insert(coords, {start_row + 1, start_col})
+      end
+
+      -- Run the command in reverse order so that the ranges are less likely to change.
+      for i = #coords, 1, -1 do
+        local start_row, start_col = unpack(coords[i])
+        vim.api.nvim_win_set_cursor(0, {start_row, start_col})
+        vim.cmd(command)
+      end
+    end
+
+    vim.api.nvim_create_user_command('Tsq', function(opts)
+      local split = vim.split(opts.args, '/', { plain = true, trimempty = true })
+      local query = split[1]
+      local command = table.concat(split, "/", 2)
+      Tsq_command(opts, query, command)
+    end, {
+      range = true,
+      nargs = '+',
+      desc = 'Run a command on tree-sitter query matches',
+    })
+
   end,
 }
