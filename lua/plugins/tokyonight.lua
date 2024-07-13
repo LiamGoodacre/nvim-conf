@@ -9,6 +9,10 @@ return {
       -- floats = "transparent",
     },
     on_highlights = function(hl, c)
+      hl.CopilotSuggestion = {
+        bg = hl.Keyword.fg,
+        fg = "#000000",
+      }
     end,
   },
 }
