@@ -1,7 +1,7 @@
 require("LiamGoodacre.settings").setup()
 
 local themes = {
-  main = "tokyonight-moon",
+  main = "tokyonight-night",
   status = "iceberg",
 }
 
