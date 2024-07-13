@@ -17,7 +17,8 @@ vim.keymap.set("n", "<leader>tP", ":tabm -1<CR>")
 
 -- explore
 vim.keymap.set("n", "<leader>x", vim.cmd.Ex)
-vim.keymap.set("n", "<leader>e", "<Cmd>Neotree toggle<CR>")
+vim.keymap.set("n", "<leader>e", vim.cmd.Neotree)
+vim.keymap.set("n", "<leader>E", function() vim.cmd.Neotree("close") end)
 
 -- finding things
 local telescope = require("telescope.builtin")
