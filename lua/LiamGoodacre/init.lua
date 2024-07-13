@@ -1,8 +1,8 @@
 require("LiamGoodacre.settings").setup()
 
 local themes = {
-  main = "tokyonight-night",
-  status = "iceberg_dark",
+  main = "tokyonight-moon",
+  status = "iceberg",
 }
 
 vim.g.status_theme = themes.status
