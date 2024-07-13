@@ -16,9 +16,10 @@ vim.keymap.set("n", "<leader>tN", ":tabm +1<CR>")
 vim.keymap.set("n", "<leader>tP", ":tabm -1<CR>")
 
 -- explore
-vim.keymap.set("n", "<leader>x", vim.cmd.Ex)
-vim.keymap.set("n", "<leader>E", vim.cmd.Neotree)
-vim.keymap.set("n", "<leader>e", function() vim.cmd.Neotree("close") end)
+vim.keymap.set("n", "<leader>xx", vim.cmd.NvimTreeToggle)
+vim.keymap.set("n", "<leader>xf", vim.cmd.NvimTreeFindFile)
+vim.keymap.set("n", "<leader>xo", vim.cmd.NvimTreeOpen)
+vim.keymap.set("n", "<leader>xc", vim.cmd.NvimTreeClose)
 
 -- finding things
 local telescope = require("telescope.builtin")
