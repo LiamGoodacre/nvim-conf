@@ -13,6 +13,7 @@ return {
       sync_install = true,
       highlight = { enable = true },
       indent = { enable = false },
+      incremental_selection = { enable = true },
       ensure_installed = {
         "bash",
         "css",
