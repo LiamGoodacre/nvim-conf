@@ -31,6 +31,7 @@ return {
     vim.keymap.set("n", "<leader>ff", telescope.find_files, {})
     vim.keymap.set("n", "<leader>gg", telescope.git_files, {})
     vim.keymap.set("n", "<C-space>", telescope.buffers, {})
+    vim.keymap.set("n", "<leader>bl", telescope.buffers, {})
     vim.keymap.set("n", "<leader>rg", telescope.live_grep, {})
     vim.keymap.set("n", "<leader>cs", telescope.colorscheme, {})
     vim.keymap.set("n", "<leader>\"p", telescope.registers, {})

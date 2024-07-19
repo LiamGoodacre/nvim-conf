@@ -1,13 +1,13 @@
 require("LiamGoodacre.settings").setup()
 
 local themes = {
-  main = "tokyonight-night",
+  editor = "tokyonight-night",
   status = "iceberg",
 }
 
 vim.g.status_theme = themes.status
 require("LiamGoodacre.plugins").setup()
-vim.cmd.colorscheme(themes.main)
+vim.cmd.colorscheme(themes.editor)
 
 require("LiamGoodacre.mappings").setup()
 
