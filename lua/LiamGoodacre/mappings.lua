@@ -2,6 +2,8 @@ return {
   setup = function()
     vim.keymap.set("n", "<Esc>", "<Cmd>nohlsearch<CR>")
 
+    vim.keymap.set("n", "<leader>w", ":w<CR>")
+
     -- pane navigation
     vim.keymap.set("n", "<C-k>", "<C-w>k")
     vim.keymap.set("n", "<C-l>", "<C-w>l")
