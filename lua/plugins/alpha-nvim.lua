@@ -50,11 +50,11 @@ return {
     }
 
     dashboard.section.buttons.val = {
-      dashboard.button("n",         "  Σ New      ", "<Cmd>ene<CR>"),
-      dashboard.button("Space x x", "  Σ Browse   ", "<leader>xx"),
-      dashboard.button("Space f f", "  Σ Files    ", "<leader>ff"),
-      dashboard.button("Space g g", "  Σ Git files", "<leader>gg"),
-      dashboard.button("Space h k", "  Σ Help keys", "<leader>hk"),
+      dashboard.button("n",       "  Σ New      ", "<Cmd>ene<CR>"),
+      dashboard.button("SPC x x", "  Σ Browse   "),
+      dashboard.button("SPC f f", "  Σ Files    "),
+      dashboard.button("SPC g g", "  Σ Git files"),
+      dashboard.button("SPC h k", "  Σ Help keys"),
     }
 
     alpha.setup(dashboard.opts)
