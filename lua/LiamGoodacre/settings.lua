@@ -9,7 +9,7 @@ return {
     vim.opt.confirm = true
     vim.opt.cursorcolumn = true
     vim.opt.cursorline = true
-    vim.opt.directory = ".swaps"
+    vim.opt.directory = vim.fn.stdpath("config") .. "/.swaps"
     vim.opt.expandtab = true
     vim.opt.foldmethod = "marker"
     vim.opt.hidden = true

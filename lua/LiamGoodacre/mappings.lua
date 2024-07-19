@@ -44,6 +44,12 @@ return {
     vim.keymap.set("n", "<leader>lt", telescope.lsp_type_definitions, {})
     vim.keymap.set("n", "<leader>ld", telescope.lsp_definitions, {})
 
+    vim.api.nvim_create_user_command('Config', function()
+      vim.cmd.cd(vim.fn.stdpath("config") .. "/lua")
+      vim.cmd("e LiamGoodacre/init.lua")
+      vim.cmd.NvimTreeFindFile()
+    end, { desc = 'Open nvim config', })
+
     local function Tsq_command(opts, query, command)
       local bufnr = vim.api.nvim_get_current_buf()
       local parser = vim.treesitter.get_parser(bufnr)
