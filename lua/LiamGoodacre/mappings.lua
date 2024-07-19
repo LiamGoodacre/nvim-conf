@@ -20,24 +20,23 @@ return {
     vim.keymap.set("n", "<leader>tN", ":tabm +1<CR>")
     vim.keymap.set("n", "<leader>tP", ":tabm -1<CR>")
 
-    -- explore
-    vim.keymap.set("n", "<leader>xx", vim.cmd.NvimTreeToggle)
-    vim.keymap.set("n", "<leader>xf", vim.cmd.NvimTreeFindFile)
-    vim.keymap.set("n", "<leader>xo", vim.cmd.NvimTreeOpen)
-    vim.keymap.set("n", "<leader>xc", vim.cmd.NvimTreeClose)
+    -- browse
+    vim.keymap.set("n", "<leader>bb", vim.cmd.NvimTreeToggle)
+    vim.keymap.set("n", "<leader>bf", vim.cmd.NvimTreeFindFile)
+    vim.keymap.set("n", "<leader>bo", vim.cmd.NvimTreeOpen)
+    vim.keymap.set("n", "<leader>bc", vim.cmd.NvimTreeClose)
 
     -- finding things
     local telescope = require("telescope.builtin")
     vim.keymap.set("n", "<leader>ff", telescope.find_files, {})
     vim.keymap.set("n", "<leader>gg", telescope.git_files, {})
     vim.keymap.set("n", "<C-space>", telescope.buffers, {})
-    vim.keymap.set("n", "<leader>bb", telescope.buffers, {})
     vim.keymap.set("n", "<leader>rg", telescope.live_grep, {})
     vim.keymap.set("n", "<leader>cs", telescope.colorscheme, {})
     vim.keymap.set("n", "<leader>\"p", telescope.registers, {})
     vim.keymap.set("n", "<leader>hk", telescope.keymaps, {})
     vim.keymap.set("n", "<leader><C-o>", telescope.keymaps, {})
-    vim.keymap.set("n", "<leader>br", telescope.git_branches, {})
+    vim.keymap.set("n", "<leader>gb", telescope.git_branches, {})
     vim.keymap.set("n", "<leader>ts", telescope.treesitter, {})
     vim.keymap.set("n", "<leader>tt", telescope.builtin, {})
     vim.keymap.set("n", "<leader>lr", telescope.lsp_references, {})
