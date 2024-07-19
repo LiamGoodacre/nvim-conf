@@ -7,13 +7,8 @@ return {
   config = function()
     require("mason").setup()
 
-    require("mason-lspconfig").setup({
-      ensure_installed = {
-        "hls",
-        "lua_ls",
-        "purescriptls",
-        "tsserver",
-      },
-    })
+    require("mason-lspconfig").setup(
+      require("LiamGoodacre.lsps").mason_lspconfig
+    )
   end,
 }
