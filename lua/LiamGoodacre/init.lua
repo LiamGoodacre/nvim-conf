@@ -2,7 +2,7 @@ require("LiamGoodacre.settings").setup()
 
 local themes = {
   editor = "tokyonight-night",
-  status = "iceberg",
+  status = "tokyonight-night",
 }
 
 vim.g.status_theme = themes.status
