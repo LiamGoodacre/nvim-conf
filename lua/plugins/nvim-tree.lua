@@ -5,6 +5,10 @@ return {
   "nvim-tree/nvim-tree.lua",
   config = function()
     require("nvim-tree").setup({
+      view = {
+        width = 48,
+        side = "left",
+      },
     })
   end,
 }
