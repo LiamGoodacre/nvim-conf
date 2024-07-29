@@ -33,7 +33,9 @@ return {
     -- finding things
     local telescope = require("telescope.builtin")
     vim.keymap.set("n", "<leader>ff", telescope.find_files, {})
+    vim.keymap.set("n", "<leader>fh", function() telescope.find_files({ cwd = vim.fn.expand("%:p:h") }) end, {})
     vim.keymap.set("n", "<leader>gg", telescope.git_files, {})
+    vim.keymap.set("n", "<leader>gh", function() telescope.git_files({ cwd = vim.fn.expand("%:p:h"), use_git_root = false }) end, {})
     vim.keymap.set("n", "<C-space>", telescope.buffers, {})
     vim.keymap.set("n", "<leader>bl", telescope.buffers, {})
     vim.keymap.set("n", "<leader>rg", telescope.live_grep, {})
