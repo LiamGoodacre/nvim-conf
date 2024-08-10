@@ -32,5 +32,9 @@ return {
     vim.opt.wildmode:append("longest")
     vim.opt.wrap = false
 
+    -- Markdown overrides expandtab, tabstop, shiftwidth, & softtabstop to 4; I don't like that.
+    -- https://github.com/neovim/neovim/blob/d25889ab7607918a152bab5ce4d14e54575ec11b/runtime/ftplugin/markdown.vim#L25-L27
+    vim.g.markdown_recommended_style = 0
+
   end,
 }
