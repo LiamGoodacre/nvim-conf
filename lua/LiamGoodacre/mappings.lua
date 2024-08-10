@@ -56,7 +56,7 @@ return {
       vim.cmd.NvimTreeFindFile()
     end, { desc = 'Open nvim config', })
 
-    local function Tsq_command(opts, query, command)
+    local function TSQ_command(opts, query, command)
       local bufnr = vim.api.nvim_get_current_buf()
       local parser = vim.treesitter.get_parser(bufnr)
       local tree = parser:parse()[1]
@@ -77,11 +77,11 @@ return {
       end
     end
 
-    vim.api.nvim_create_user_command('Tsq', function(opts)
+    vim.api.nvim_create_user_command('TSQ', function(opts)
       local split = vim.split(opts.args, '/', { plain = true, trimempty = true })
       local query = split[1]
       local command = table.concat(split, "/", 2)
-      Tsq_command(opts, query, command)
+      TSQ_command(opts, query, command)
     end, {
       range = true,
       nargs = '+',
