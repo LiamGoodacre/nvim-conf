@@ -7,6 +7,7 @@ return {
     incremental_selection = { enable = true },
     ensure_installed = {
       "bash",
+      "c",
       "css",
       "diff",
       "dot",
