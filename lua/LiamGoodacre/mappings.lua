@@ -111,6 +111,10 @@ return {
           end
         end
 
+        local function cursorat(row, col)
+          vim.api.nvim_buf_add_highlight(0, preview_ns, "Underlined", row - 1, col, col + 1)
+        end
+
         TSQ_each(opts, function(coord, row, col, command)
           local start_row, start_col, end_row, end_col = unpack(coord)
           hlrange(start_row, start_col, end_row, end_col, "Changed")
@@ -119,10 +123,12 @@ return {
             vim.api.nvim_win_set_cursor(0, {row, col})
             if not pcall(vim.cmd(command)) then
               local cursor_row, cursor_col = unpack(vim.api.nvim_win_get_cursor(0))
-              vim.api.nvim_buf_add_highlight(0, preview_ns, "Underlined", cursor_row - 1, cursor_col, cursor_col + 1)
+              cursorat(cursor_row, cursor_col)
             else
-              vim.api.nvim_buf_add_highlight(0, preview_ns, "Underlined", row - 1, col, col + 1)
+              cursorat(row, col)
             end
+          else
+            cursorat(row, col)
           end
         end)
 
