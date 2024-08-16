@@ -9,6 +9,8 @@ vim.g.status_theme = themes.status
 require("LiamGoodacre.plugins").setup()
 vim.cmd.colorscheme(themes.editor)
 
-require("LiamGoodacre.mappings").setup()
+require("LiamGoodacre.command").setup()
 
-require("LiamGoodacre.lsps").setup()
+require("LiamGoodacre.mapping").setup()
+
+require("LiamGoodacre.lsp").setup()
