@@ -10,6 +10,7 @@ return {
       "c",
       "css",
       "diff",
+      "dhall",
       "dot",
       "git_config",
       "git_rebase",
