@@ -5,7 +5,7 @@ return {
       "hls",
       "lua_ls",
       "purescriptls",
-      "tsserver",
+      "ts_ls",
     },
   },
   setup = function()
