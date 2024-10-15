@@ -36,5 +36,7 @@ return {
     -- https://github.com/neovim/neovim/blob/d25889ab7607918a152bab5ce4d14e54575ec11b/runtime/ftplugin/markdown.vim#L25-L27
     vim.g.markdown_recommended_style = 0
 
+    vim.filetype.add({ extension = { purs = 'purescript' }})
+
   end,
 }
