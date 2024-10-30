@@ -2,6 +2,7 @@ return {
   -- see ../plugins/nvim-lspconfig.lua
   mason_lspconfig = {
     ensure_installed = {
+      "bzl",
       "hls",
       "lua_ls",
       "purescriptls",
