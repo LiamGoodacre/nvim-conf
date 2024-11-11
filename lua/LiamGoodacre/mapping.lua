@@ -55,6 +55,16 @@ return {
       vim.cmd("e LiamGoodacre/init.lua")
       vim.cmd.NvimTreeFindFile()
     end, { desc = 'Open nvim config', })
+
+    vim.api.nvim_create_user_command('ConfigTmux', function()
+      vim.cmd.cd(vim.fn.stdpath("config") .. "/../tmux-conf")
+      vim.cmd("e .tmux.conf")
+    end, { desc = 'Open tmux config', })
+
+    vim.api.nvim_create_user_command('ConfigTerm', function()
+      vim.cmd.cd(vim.fn.stdpath("config") .. "/../alacritty-conf")
+      vim.cmd("e .alacritty.toml")
+    end, { desc = 'Open terminal config', })
   end,
 
   on_nvim_tree_attach = function(bufnr)
