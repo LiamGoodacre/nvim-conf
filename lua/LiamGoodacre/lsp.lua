@@ -6,6 +6,7 @@ return {
       "hls",
       "lua_ls",
       "purescriptls",
+      "pyright",
       "ts_ls",
     },
   },
