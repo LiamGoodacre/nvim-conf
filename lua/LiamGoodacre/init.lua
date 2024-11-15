@@ -10,7 +10,5 @@ require("LiamGoodacre.plugin").setup()
 vim.cmd.colorscheme(themes.editor)
 
 require("LiamGoodacre.command").setup()
-
 require("LiamGoodacre.mapping").setup()
-
 require("LiamGoodacre.language").setup()
