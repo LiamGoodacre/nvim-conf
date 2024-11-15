@@ -1,4 +1,5 @@
 return {
+  lsps = {'bzl'},
   setup = function()
     require("lspconfig").bzl.setup({
       filetypes = { "bzl", "bazel", "bazelrc", "WORKSPACE" },

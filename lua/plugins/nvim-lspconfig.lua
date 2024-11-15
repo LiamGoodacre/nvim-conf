@@ -8,7 +8,7 @@ return {
     require("mason").setup()
 
     require("mason-lspconfig").setup(
-      require("LiamGoodacre.lsp").mason_lspconfig
+      require("LiamGoodacre.language").mason_lspconfig()
     )
   end,
 }

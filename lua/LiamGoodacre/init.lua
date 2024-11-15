@@ -13,4 +13,4 @@ require("LiamGoodacre.command").setup()
 
 require("LiamGoodacre.mapping").setup()
 
-require("LiamGoodacre.lsp").setup()
+require("LiamGoodacre.language").setup()

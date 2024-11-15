@@ -5,7 +5,7 @@ return {
     vim.g.mapleader = " "
     vim.g.maplocalleader = "\\"
 
-    vim.opt.autoindent = false
+    vim.opt.autoindent = true
     vim.opt.confirm = true
     vim.opt.cursorcolumn = true
     vim.opt.cursorline = true
@@ -24,6 +24,7 @@ return {
     vim.opt.shortmess:append("I")
     vim.opt.showmatch = false -- highlight matched brackets
     vim.opt.signcolumn = "number" -- line number getter size
+    vim.opt.smartindent = false
     vim.opt.softtabstop = 2
     vim.opt.spelllang = "en_gb"
     vim.opt.tabstop = 2
@@ -31,12 +32,5 @@ return {
     vim.opt.wildmode:append("list")
     vim.opt.wildmode:append("longest")
     vim.opt.wrap = false
-
-    -- Markdown overrides expandtab, tabstop, shiftwidth, & softtabstop to 4; I don't like that.
-    -- https://github.com/neovim/neovim/blob/d25889ab7607918a152bab5ce4d14e54575ec11b/runtime/ftplugin/markdown.vim#L25-L27
-    vim.g.markdown_recommended_style = 0
-
-    vim.filetype.add({ extension = { purs = 'purescript' }})
-
   end,
 }

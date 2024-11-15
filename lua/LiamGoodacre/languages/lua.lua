@@ -1,10 +1,16 @@
 return {
+  lsps = {'lua_ls'},
   setup = function()
+
+    local lua = 'LiamGoodacre-lua'
+    vim.filetype.add({ extension = { lua = lua } })
+    vim.treesitter.language.register('lua', lua)
 
     -- Copied from:
     -- https://github.com/neovim/nvim-lspconfig/blob/216deb2d1b5fbf24398919228208649bbf5cbadf/doc/server_configurations.md#lua_ls
 
     require("lspconfig").lua_ls.setup({
+      filetypes = { lua },
       on_init = function(client)
         local path = client.workspace_folders[1].name
         if vim.loop.fs_stat(path..'/.luarc.json') or vim.loop.fs_stat(path..'/.luarc.jsonc') then
