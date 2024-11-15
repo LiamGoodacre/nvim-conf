@@ -1,4 +1,4 @@
-require("LiamGoodacre.settings").setup()
+require("LiamGoodacre.setting").setup()
 
 local themes = {
   editor = "tokyonight-night",
@@ -6,7 +6,7 @@ local themes = {
 }
 
 vim.g.status_theme = themes.status
-require("LiamGoodacre.plugins").setup()
+require("LiamGoodacre.plugin").setup()
 vim.cmd.colorscheme(themes.editor)
 
 require("LiamGoodacre.command").setup()
