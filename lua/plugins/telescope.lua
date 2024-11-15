@@ -3,11 +3,7 @@ return {
   dependencies = { 'nvim-lua/plenary.nvim' },
   opts = {
     defaults = {
-      mappings = {
-        i = {
-          [""] = require("telescope.actions.layout").toggle_preview,
-        },
-      },
+      mappings = require("LiamGoodacre.mapping").telescope_window_mappings(),
     },
   },
 }

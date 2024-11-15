@@ -67,6 +67,14 @@ return {
     end, { desc = 'Open terminal config', })
   end,
 
+  telescope_window_mappings = function()
+    return {
+      i = {
+        [""] = require("telescope.actions.layout").toggle_preview, -- AKA Ctrl-/
+      },
+    }
+  end,
+
   on_nvim_tree_attach = function(bufnr)
     local api = require('nvim-tree.api')
     local function opts(desc)
