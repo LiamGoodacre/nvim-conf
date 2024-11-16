@@ -28,7 +28,7 @@ return {
       alpha_dashboard.button("SPC f f", "  Σ :Files"),
       alpha_dashboard.button("SPC g g", "  Σ :GitFiles"),
       alpha_dashboard.button("SPC r g", "  Σ :Telescope live_grep"),
-      alpha_dashboard.button("SPC h k", "  Σ :HelpKeys"),
+      alpha_dashboard.button("SPC h k", "  Σ :Telescope keymaps"),
     }
 
   end,
