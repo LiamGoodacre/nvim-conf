@@ -1,10 +1,11 @@
 return {
   setup = function()
+
     vim.keymap.set("n", "<Esc>", "<Cmd>nohlsearch<CR>")
 
     vim.keymap.set("n", "<leader>w", ":w<CR>")
 
-    -- pane navigation
+    -- pane navigation {{{
     vim.keymap.set("n", "<C-k>", "<C-w>k")
     vim.keymap.set("n", "<C-l>", "<C-w>l")
     vim.keymap.set("n", "<C-j>", "<C-w>j")
@@ -17,20 +18,23 @@ return {
     vim.keymap.set("n", "<Right>", "<C-w>l")
     vim.keymap.set("n", "<Down>", "<C-w>j")
     vim.keymap.set("n", "<Left>", "<C-w>h")
+    -- }}} pane navigation
 
-    -- tab control
+    -- tab control {{{
     vim.keymap.set("n", "<leader>tn", ":tabn<CR>")
     vim.keymap.set("n", "<leader>tp", ":tabp<CR>")
     vim.keymap.set("n", "<leader>tN", ":tabm +1<CR>")
     vim.keymap.set("n", "<leader>tP", ":tabm -1<CR>")
+    -- }}} tab control
 
-    -- browse
+    -- browse {{{
     vim.keymap.set("n", "<leader>bb", vim.cmd.NvimTreeToggle)
     vim.keymap.set("n", "<leader>bf", vim.cmd.NvimTreeFindFile)
     vim.keymap.set("n", "<leader>bo", vim.cmd.NvimTreeOpen)
     vim.keymap.set("n", "<leader>bc", vim.cmd.NvimTreeClose)
+    -- }}} browse
 
-    -- finding things
+    -- finding things {{{
     local telescope = require("telescope.builtin")
     vim.keymap.set("n", "<leader>ff", telescope.find_files, {})
     vim.keymap.set("n", "<leader>fh", function() telescope.find_files({ cwd = vim.fn.expand("%:p:h") }) end, {})
@@ -49,7 +53,11 @@ return {
     vim.keymap.set("n", "<leader>lr", telescope.lsp_references, {})
     vim.keymap.set("n", "<leader>lt", telescope.lsp_type_definitions, {})
     vim.keymap.set("n", "<leader>ld", telescope.lsp_definitions, {})
+    vim.keymap.set("n", "<leader>le", telescope.diagnostics, {})
+    -- }}} finding things
 
+
+    -- editing configuration {{{
     vim.api.nvim_create_user_command('Config', function()
       vim.cmd.cd(vim.fn.stdpath("config") .. "/lua")
       vim.cmd("e LiamGoodacre/init.lua")
@@ -65,6 +73,8 @@ return {
       vim.cmd.cd(vim.fn.stdpath("config") .. "/../alacritty-conf")
       vim.cmd("e .alacritty.toml")
     end, { desc = 'Open terminal config', })
+    -- }}} editing configuration
+
   end,
 
   telescope_window_mappings = function()
@@ -94,7 +104,7 @@ return {
     --vim.keymap.set('n', 'L',     api.node.open.toggle_group_empty,  opts('Toggle Group Empty'))
     --vim.keymap.set('n', 'x',     api.fs.cut,                        opts('Cut'))
 
-    -- yet to consider
+    -- yet to consider {{{
     vim.keymap.set('n', '<C-]>',          api.tree.change_root_to_node,        opts('CD'))
     vim.keymap.set('n', '<C-k>',          api.node.show_info_popup,            opts('Info'))
     vim.keymap.set('n', '<C-r>',          api.fs.rename_sub,                   opts('Rename: Omit Filename'))
@@ -144,6 +154,7 @@ return {
     vim.keymap.set('n', 'Y',              api.fs.copy.relative_path,           opts('Copy Relative Path'))
     vim.keymap.set('n', '<2-LeftMouse>',  api.node.open.edit,                  opts('Open'))
     vim.keymap.set('n', '<2-RightMouse>', api.tree.change_root_to_node,        opts('CD'))
+    -- }}} yet to consider
 
   end,
 }
