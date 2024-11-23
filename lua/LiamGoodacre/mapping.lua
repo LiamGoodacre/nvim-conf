@@ -54,6 +54,7 @@ return {
     vim.keymap.set("n", "<leader>lt", telescope.lsp_type_definitions, {})
     vim.keymap.set("n", "<leader>ld", telescope.lsp_definitions, {})
     vim.keymap.set("n", "<leader>le", telescope.diagnostics, {})
+    vim.keymap.set("i", "<C-s>", telescope.symbols, {})
     -- }}} finding things
 
     -- harpoon {{{
