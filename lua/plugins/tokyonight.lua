@@ -8,11 +8,6 @@ return {
       sidebars = "dark",
       floats = "dark",
     },
-    on_highlights = function(hl, c)
-      hl.CopilotSuggestion = {
-        bg = hl.Keyword.fg,
-        fg = "#000000",
-      }
-    end,
+    on_highlights = require("LiamGoodacre.theme").highlights,
   },
 }
