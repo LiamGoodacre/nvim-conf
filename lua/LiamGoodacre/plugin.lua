@@ -22,7 +22,7 @@ return {
       spec = { { import = "plugins" } },
       pkg = { sources = { "lazy", "packspec" } },
       rocks = { enabled = false },
-      checker = { enabled = true },
+      checker = { enabled = false },
     })
   end,
 }
