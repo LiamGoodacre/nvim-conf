@@ -55,6 +55,8 @@ return {
     vim.keymap.set("n", "<leader>ld", telescope.lsp_definitions, {})
     vim.keymap.set("n", "<leader>le", telescope.diagnostics, {})
     vim.keymap.set("i", "<C-s>", telescope.symbols, {})
+    vim.keymap.set("n", "<leader><tab>", telescope.resume, {})
+    vim.keymap.set("n", "<leader>g]", require("LiamGoodacre.commands.teletag").teletag, { desc = "Telescope jump to exact tag matches" })
     -- }}} finding things
 
     -- harpoon {{{
