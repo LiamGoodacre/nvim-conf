@@ -7,16 +7,27 @@ return {
     require("lspconfig").hls.setup({ filetypes = { haskell, 'cabal' } })
 
     vim.api.nvim_create_autocmd("FileType", {
+      pattern = { haskell },
+      callback = function()
+        -- on save, format the file with hls
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          buffer = 0,
+          callback = function()
+            vim.lsp.buf.format({ async = true })
+          end,
+        })
+      end,
+    })
+
+    vim.api.nvim_create_autocmd("FileType", {
       pattern = { haskell, 'cabal' },
       callback = function()
-
         -- @ = alphanumeric characters,
         -- 39 = single quote
         -- 48-57 = digits
         -- _ = underscore
         -- 192-255 = extended ASCII
         vim.opt_local.iskeyword = "@,39,48-57,_,192-255"
-
       end,
     })
   end,
