@@ -15,7 +15,7 @@ return {
     vim.opt.hidden = true
     vim.opt.inccommand = "split"
     vim.opt.list = true
-    vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+    vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
     vim.opt.mouse = "a"
     vim.opt.number = true
     vim.opt.relativenumber = true

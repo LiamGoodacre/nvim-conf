@@ -1,6 +1,6 @@
 
 local function TSQ_each(opts, op)
-  local split = vim.split(opts.args, '/', { plain = true, trimempty = true })
+  local split = vim.split(opts.args, "/", { plain = true, trimempty = true })
   local which_end = split[1]
   local query = split[2]
   local rest = table.concat(split, "/", 3)
@@ -80,17 +80,17 @@ local function TSQ_command_preview(exec)
 end
 
 local function setup()
-  vim.api.nvim_create_user_command('TSQ', TSQ_command, {
+  vim.api.nvim_create_user_command("TSQ", TSQ_command, {
     range = true,
-    nargs = '+',
-    desc = 'Run a command on tree-sitter query matches',
+    nargs = "+",
+    desc = "Run a command on tree-sitter query matches",
     preview = TSQ_command_preview(false),
   })
 
-  vim.api.nvim_create_user_command('TSQx', TSQ_command, {
+  vim.api.nvim_create_user_command("TSQx", TSQ_command, {
     range = true,
-    nargs = '+',
-    desc = 'Run a command on tree-sitter query matches (previewing the command)',
+    nargs = "+",
+    desc = "Run a command on tree-sitter query matches (previewing the command)",
     preview = TSQ_command_preview(true),
   })
 end

@@ -6,8 +6,8 @@ return {
     -- (technically not used now because I'm replacing markdown with LiamGoodacre-markdown)
     vim.g.markdown_recommended_style = 0
 
-    local markdown = 'LiamGoodacre-markdown'
+    local markdown = "LiamGoodacre-markdown"
     vim.filetype.add({ extension = { md = markdown, markdown = markdown } })
-    vim.treesitter.language.register('markdown', markdown)
+    vim.treesitter.language.register("markdown", markdown)
   end,
 }

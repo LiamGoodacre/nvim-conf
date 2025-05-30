@@ -1,10 +1,10 @@
 return {
-  lsps = {'hls'},
+  lsps = {"hls"},
   setup = function()
-    local haskell = 'LiamGoodacre-haskell'
+    local haskell = "LiamGoodacre-haskell"
     vim.filetype.add({ extension = { hs = haskell, lhs = haskell } })
-    vim.treesitter.language.register('haskell', haskell)
-    require("lspconfig").hls.setup({ filetypes = { haskell, 'cabal' } })
+    vim.treesitter.language.register("haskell", haskell)
+    require("lspconfig").hls.setup({ filetypes = { haskell, "cabal" } })
 
     vim.api.nvim_create_autocmd("FileType", {
       pattern = { haskell },
@@ -20,7 +20,7 @@ return {
     })
 
     vim.api.nvim_create_autocmd("FileType", {
-      pattern = { haskell, 'cabal' },
+      pattern = { haskell, "cabal" },
       callback = function()
         -- @ = alphanumeric characters,
         -- 39 = single quote
