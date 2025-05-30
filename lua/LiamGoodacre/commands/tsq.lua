@@ -6,6 +6,11 @@ local function TSQ_each(opts, op)
   local rest = table.concat(split, "/", 3)
 
   local parser = vim.treesitter.get_parser(0)
+  if not parser then
+    vim.notify("No treesitter parser found for current buffer", vim.log.levels.ERROR)
+    return
+  end
+
   local tree = parser:parse()[1]
   local root = tree:root()
   local query_obj = vim.treesitter.query.parse(vim.bo.filetype, query)
@@ -38,29 +43,18 @@ end
 
 local function TSQ_command_preview(exec)
   return function (opts, preview_ns)
-    local function hlrange(row1, col1, row2, col2, hlgroup)
-      if row1 > row2 or (row1 == row2 and col1 > col2) then
-        row1, col1, row2, col2 = row2, col2, row1, col1
-      end
-
-      if row1 == row2 then
-        vim.api.nvim_buf_add_highlight(0, preview_ns, hlgroup, row1 - 1, col1, col2 + 1)
-      else
-        vim.api.nvim_buf_add_highlight(0, preview_ns, hlgroup, row1 - 1, col1, -1)
-        for i = row1 + 1, row2 - 1 do
-          vim.api.nvim_buf_add_highlight(0, preview_ns, hlgroup, i - 1, 0, -1)
-        end
-        vim.api.nvim_buf_add_highlight(0, preview_ns, hlgroup, row2 - 1, 0, col2 + 1)
-      end
-    end
-
     local function cursorat(row, col)
-      vim.api.nvim_buf_add_highlight(0, preview_ns, "Underlined", row - 1, col, col + 1)
+      vim.hl.range(0, preview_ns, "Underlined",
+        { row - 1, col },
+        { row - 1, col + 1 })
     end
 
     TSQ_each(opts, function(coord, row, col, command)
       local start_row, start_col, end_row, end_col = unpack(coord)
-      hlrange(start_row, start_col, end_row, end_col, "Changed")
+
+      vim.hl.range(0, preview_ns, "Changed",
+        { start_row - 1, start_col },
+        { end_row - 1, end_col + 1 })
 
       if exec then
         vim.api.nvim_win_set_cursor(0, {row, col})
