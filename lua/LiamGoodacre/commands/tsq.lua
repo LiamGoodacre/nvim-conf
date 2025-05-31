@@ -13,7 +13,7 @@ local function TSQ_each(opts, op)
 
   local tree = parser:parse()[1]
   local root = tree:root()
-  local query_obj = vim.treesitter.query.parse(vim.bo.filetype, query)
+  local query_obj = vim.treesitter.query.parse(parser:lang(), query)
 
   local coords = {}
   for _, node in query_obj:iter_captures(root, 0, opts.line1 - 1, opts.line2) do
