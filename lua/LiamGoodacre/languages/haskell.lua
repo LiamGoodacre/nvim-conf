@@ -6,16 +6,12 @@ return {
     vim.treesitter.language.register("haskell", haskell)
     require("lspconfig").hls.setup({ filetypes = { haskell, "cabal" } })
 
-    vim.api.nvim_create_autocmd("FileType", {
+    -- on save, format the file with hls
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = 0,
       pattern = { haskell },
       callback = function()
-        -- on save, format the file with hls
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          buffer = 0,
-          callback = function()
-            vim.lsp.buf.format({ async = true })
-          end,
-        })
+        vim.lsp.buf.format({ async = true })
       end,
     })
 
