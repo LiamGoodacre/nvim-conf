@@ -112,6 +112,11 @@ return {
     -- lsp {{{
     vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, { desc = "Rename" })
     vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, { desc = "Format" })
+
+    vim.keymap.set("n", "<leader>b!", function()
+      vim.cmd("silent! !bormolu-format -- " .. vim.fn.expand("%:p"))
+      vim.cmd("silent! edit")
+    end, { desc = "Format with bormolu" })
     -- }}} lsp
 
   end,
