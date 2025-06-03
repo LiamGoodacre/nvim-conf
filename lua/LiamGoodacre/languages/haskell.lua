@@ -8,8 +8,7 @@ return {
 
     -- on save, format the file with hls
     vim.api.nvim_create_autocmd("BufWritePre", {
-      buffer = 0,
-      pattern = { haskell },
+      pattern = { '*.hs', '*.lhs', '*.cabal' },
       callback = function()
         vim.lsp.buf.format({ async = true })
       end,
