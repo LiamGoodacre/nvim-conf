@@ -50,7 +50,7 @@ return {
     vim.keymap.set("n", "<leader>gb", telescope.git_branches, {})
     vim.keymap.set("n", "<leader>ts", telescope.treesitter, {})
     vim.keymap.set("n", "<leader>tt", telescope.builtin, {})
-    vim.keymap.set("n", "<leader>lr", telescope.lsp_references, {})
+    vim.keymap.set("n", "<leader>lw", telescope.lsp_references, {})
     vim.keymap.set("n", "<leader>lt", telescope.lsp_type_definitions, {})
     vim.keymap.set("n", "<leader>ld", telescope.lsp_definitions, {})
     vim.keymap.set("n", "<leader>le", telescope.diagnostics, {})
@@ -104,6 +104,11 @@ return {
       vim.cmd("e .alacritty.toml")
     end, { desc = "Open terminal config", })
     -- }}} editing configuration
+
+    -- lsp {{{
+    vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, { desc = "Rename" })
+    vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, { desc = "Format" })
+    -- }}} lsp
 
   end,
 
