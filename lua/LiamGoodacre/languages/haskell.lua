@@ -56,9 +56,29 @@ local ormolu_on_buffer = function()
   end
 end
 
+local bormolu_format = function()
+  using_git_root(function(git_root)
+    vim.fn.jobstart({ "bormolu-format", "--", vim.fn.expand("%:p") }, {
+      cwd = git_root,
+      stdout_buffered = true,
+      on_exit = function(_, code)
+        if code ~= 0 then
+          vim.notify("bormolu-format failed with code: " .. code, vim.log.levels.ERROR)
+          return
+        end
+
+        vim.cmd("silent! checktime")
+        vim.notify("formatted with bormolu-format", vim.log.levels.INFO)
+      end,
+    })
+  end)
+end
+
 return {
   lsps = ({[true] = {"hls"}, [false] = {}})[use_hls],
   update_tags = update_tags,
+  ormolu_on_buffer = ormolu_on_buffer,
+  bormolu_format = bormolu_format,
   setup = function()
     vim.filetype.add({ extension = { hs = haskell, lhs = haskell } })
     vim.treesitter.language.register("haskell", haskell)
