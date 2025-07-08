@@ -6,6 +6,7 @@ return {
     vim.g.maplocalleader = "\\"
 
     vim.opt.autoindent = true
+    vim.opt.breakindent = true
     vim.opt.confirm = true
     vim.opt.cursorcolumn = true
     vim.opt.cursorline = true
@@ -23,6 +24,7 @@ return {
     vim.opt.shiftwidth = 2
     vim.opt.shortmess:append("I")
     vim.opt.showmatch = false -- highlight matched brackets
+    vim.opt.showmode = false
     vim.opt.signcolumn = "number" -- line number getter size
     vim.opt.smartindent = false
     vim.opt.softtabstop = 2
