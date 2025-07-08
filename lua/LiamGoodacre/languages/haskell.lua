@@ -1,5 +1,6 @@
 local haskell = "LiamGoodacre-haskell"
 local pattern = { haskell, "*.hs", "*.lhs", "*.cabal" }
+local use_hls = true
 
 local using_git_root = function(k)
   local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
@@ -56,20 +57,23 @@ local ormolu_on_buffer = function()
 end
 
 return {
-  lsps = {"hls"},
+  lsps = ({[true] = {"hls"}, [false] = {}})[use_hls],
   update_tags = update_tags,
   setup = function()
     vim.filetype.add({ extension = { hs = haskell, lhs = haskell } })
     vim.treesitter.language.register("haskell", haskell)
-    require("lspconfig").hls.setup({
-      filetypes = { haskell, "haskell", "lhaskell", "cabal" },
-      settings = {
-        [haskell] = {
-          formattingProvider = 'ormolu',
-          cabalFormattingProvider = 'cabalfmt',
+
+    if use_hls then
+      require("lspconfig").hls.setup({
+        filetypes = { haskell, "haskell", "lhaskell", "cabal" },
+        settings = {
+          [haskell] = {
+            formattingProvider = 'ormolu',
+            cabalFormattingProvider = 'cabalfmt',
+          },
         },
-      },
-    })
+      })
+    end
 
     vim.api.nvim_create_autocmd("FileType", {
       pattern = pattern,
