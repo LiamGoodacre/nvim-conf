@@ -43,7 +43,6 @@ return {
     vim.keymap.set("n", "<C-space>", telescope.buffers, {})
     vim.keymap.set("n", "<leader>bl", telescope.buffers, {})
     vim.keymap.set("n", "<leader>rg", telescope.live_grep, {})
-    vim.keymap.set("n", "<leader>cs", telescope.colorscheme, {})
     vim.keymap.set("n", "<leader>\"p", telescope.registers, {})
     vim.keymap.set("n", "<leader>hk", telescope.keymaps, {})
     vim.keymap.set("n", "<leader><C-o>", telescope.keymaps, {})
