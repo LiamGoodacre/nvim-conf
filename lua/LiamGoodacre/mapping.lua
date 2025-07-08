@@ -100,8 +100,8 @@ return {
     end, { desc = "Open tmux config", })
 
     vim.api.nvim_create_user_command("ConfigTerm", function()
-      vim.cmd.cd(vim.fn.stdpath("config") .. "/../alacritty-conf")
-      vim.cmd("e .alacritty.toml")
+      vim.cmd.cd(vim.fn.stdpath("config") .. "/../ghostty")
+      vim.cmd("e config")
     end, { desc = "Open terminal config", })
     -- }}} editing configuration
 
