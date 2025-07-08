@@ -1,6 +1,10 @@
 local haskell = "LiamGoodacre-haskell"
 local pattern = { haskell, "*.hs", "*.lhs", "*.cabal" }
+
 local use_hls = true
+
+local format_with = "ormolu" -- can be "ormolu", "bormolu-format", or "lsp"
+local format_on = "BufWritePre"
 
 local using_git_root = function(k)
   local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
@@ -74,11 +78,22 @@ local bormolu_format = function()
   end)
 end
 
+local format = function()
+  if format_with == "ormolu" then
+    ormolu_on_buffer()
+  elseif format_with == "bormolu-format" then
+    bormolu_format()
+  elseif format_with == "lsp" then
+    vim.lsp.buf.format({ async = true })
+  else
+    vim.notify("Unknown format method: " .. format_with, vim.log.levels.ERROR)
+  end
+end
+
 return {
   lsps = ({[true] = {"hls"}, [false] = {}})[use_hls],
   update_tags = update_tags,
-  ormolu_on_buffer = ormolu_on_buffer,
-  bormolu_format = bormolu_format,
+  format = format,
   setup = function()
     vim.filetype.add({ extension = { hs = haskell, lhs = haskell } })
     vim.treesitter.language.register("haskell", haskell)
@@ -107,20 +122,14 @@ return {
       end,
     })
 
-    vim.api.nvim_create_autocmd("BufWritePre", {
+    vim.api.nvim_create_autocmd(format_on, {
       pattern = pattern,
-      callback = function()
-        -- this is currently not working, so we'll use ormolu directly
-        -- vim.lsp.buf.format({ async = true })
-        ormolu_on_buffer()
-      end,
+      callback = format,
     })
 
     vim.api.nvim_create_autocmd("BufWritePost", {
       pattern = pattern,
-      callback = function()
-        update_tags()
-      end,
+      callback = update_tags,
     })
 
   end,
