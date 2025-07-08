@@ -102,6 +102,11 @@ return {
       vim.cmd.cd(vim.fn.stdpath("config") .. "/../ghostty")
       vim.cmd("e config")
     end, { desc = "Open terminal config", })
+
+    vim.api.nvim_create_user_command("ConfigScripts", function()
+      vim.cmd.cd(vim.fn.stdpath("config") .. "/../provision-conf")
+      vim.cmd("e scripts")
+    end, { desc = "Open scripts", })
     -- }}} editing configuration
 
     -- lsp {{{

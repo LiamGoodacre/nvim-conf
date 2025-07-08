@@ -24,6 +24,7 @@ return {
       alpha_dashboard.button("c c",     "  Σ :Config", "<Cmd>Config<CR>"),
       alpha_dashboard.button("c x",     "  Σ :ConfigTmux", "<Cmd>ConfigTmux<CR>"),
       alpha_dashboard.button("c t",     "  Σ :ConfigTerm", "<Cmd>ConfigTerm<CR>"),
+      alpha_dashboard.button("c s",     "  Σ :ConfigScripts", "<Cmd>ConfigScripts<CR>"),
       alpha_dashboard.button("SPC b b", "  Σ :Browse"),
       alpha_dashboard.button("SPC f f", "  Σ :Files"),
       alpha_dashboard.button("SPC g g", "  Σ :GitFiles"),
