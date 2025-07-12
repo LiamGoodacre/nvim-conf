@@ -1,0 +1,33 @@
+-- Copied and pruned from "lazy.core.util"
+
+local M = {}
+
+function M.lsmod(mod_prefix, fn)
+  local mod_path = vim.fn.stdpath("config") .. "/lua/" .. mod_prefix:gsub("%.", "/")
+
+  local handle = vim.uv.fs_scandir(mod_path)
+  while handle do
+    local basename, possible_filetype = vim.uv.fs_scandir_next(handle)
+
+    if not basename then
+      break
+    end
+
+    local filename = mod_path .. "/" .. basename
+    local filetype = possible_filetype or vim.uv.fs_stat(filename).type
+
+    if basename == "init.lua" then
+      fn(mod_prefix)
+    elseif filetype == "file" or filetype == "link" then
+      if basename:sub(-4) == ".lua" then
+        fn(mod_prefix .. "." .. basename:sub(1, -5))
+      end
+    elseif filetype == "directory" then
+      if vim.uv.fs_stat(filename .. "/init.lua") then
+        fn(mod_prefix .. "." .. basename)
+      end
+    end
+  end
+end
+
+return M
