@@ -6,12 +6,6 @@ return {
   setup = function()
     vim.cmd.colorscheme(theme)
 
-    vim.diagnostic.config({
-      float = {
-        border = "rounded",
-      },
-    })
-
     local lsp_open_floating_preview = vim.lsp.util.open_floating_preview
     ---@diagnostic disable-next-line: duplicate-set-field
     vim.lsp.util.open_floating_preview = function(contents, format, config)
