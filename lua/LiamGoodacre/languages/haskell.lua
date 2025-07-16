@@ -124,7 +124,7 @@ return {
     })
 
     vim.api.nvim_create_autocmd(format_on, {
-      pattern = pattern,
+      pattern = hspattern,
       callback = format,
     })
 
