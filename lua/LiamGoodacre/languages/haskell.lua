@@ -1,4 +1,5 @@
 local haskell = "LiamGoodacre-haskell"
+local hspattern = { haskell, "*.hs", "*.lhs" }
 local pattern = { haskell, "*.hs", "*.lhs", "*.cabal" }
 
 local use_hls = true
@@ -128,7 +129,7 @@ return {
     })
 
     vim.api.nvim_create_autocmd("BufWritePost", {
-      pattern = pattern,
+      pattern = hspattern,
       callback = update_tags,
     })
 
