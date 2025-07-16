@@ -1,5 +1,5 @@
 return {
-  -- see ../plugins/nvim-lspconfig.lua
+  -- see ../plugins/mason-lsp.lua
   mason_lspconfig = function()
     local ensure_installed = {}
 
