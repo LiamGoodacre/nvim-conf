@@ -9,6 +9,6 @@ return {
 
   opts = function()
     local configs = require("nvim-treesitter.configs")
-    configs.setup(require("LiamGoodacre.treesitter").config)
+    configs.setup(require("LiamGoodacre.language").treesitter_config)
   end
 }

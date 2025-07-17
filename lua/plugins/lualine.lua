@@ -3,7 +3,7 @@ return {
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   opts = {
     options = {
-      theme = require("LiamGoodacre.theme").status_theme,
+      theme = require("LiamGoodacre.theme").theme,
     },
   },
 }

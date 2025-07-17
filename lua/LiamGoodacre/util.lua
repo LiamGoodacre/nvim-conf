@@ -2,6 +2,7 @@
 
 local M = {}
 
+-- Apply fn to each direct module under mod_prefix.
 function M.lsmod(mod_prefix, fn)
   local mod_path = vim.fn.stdpath("config") .. "/lua/" .. mod_prefix:gsub("%.", "/")
 
