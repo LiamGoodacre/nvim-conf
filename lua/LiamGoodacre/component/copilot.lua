@@ -8,7 +8,8 @@ end
 
 
 M.plugins = {
-  { src = "https://github.com/github/copilot.vim" },
+  -- later than 1.56 requires node 22+
+  { src = "https://github.com/github/copilot.vim", version = vim.version.range("v1.55.0") },
 }
 
 
