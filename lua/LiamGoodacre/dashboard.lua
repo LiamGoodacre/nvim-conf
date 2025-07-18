@@ -1,7 +1,8 @@
 local M = {}
 
-M.configure = function(alpha_dashboard)
-  -- See ../plugins/alpha-nvim.lua
+M.setup = function()
+  local alpha = require("alpha")
+  local alpha_dashboard = require("alpha.themes.dashboard")
 
   alpha_dashboard.section.header.opts.hl = "Character"
 
@@ -33,6 +34,7 @@ M.configure = function(alpha_dashboard)
     alpha_dashboard.button("SPC h k", "  Σ :Telescope keymaps"),
   }
 
+  alpha.setup(alpha_dashboard.opts)
 end
 
 return M

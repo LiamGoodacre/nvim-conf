@@ -1,6 +1,8 @@
 require("LiamGoodacre.setting").setup()
 require("LiamGoodacre.plugin").setup()
 require("LiamGoodacre.theme").setup()
+require("LiamGoodacre.tooling").setup()
 require("LiamGoodacre.util").setup_modules("LiamGoodacre.commands")
 require("LiamGoodacre.util").setup_modules("LiamGoodacre.mappings")
 require("LiamGoodacre.util").setup_modules("LiamGoodacre.languages")
+require("LiamGoodacre.dashboard").setup()
