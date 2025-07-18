@@ -20,8 +20,8 @@ M.on_nvim_tree_attach = function(bufnr)
   vim.keymap.set("n", "X",     api.tree.toggle_no_bookmark_filter, opts("Toggle Filter: No Bookmark"))
   vim.keymap.set("n", "x",     api.marks.toggle,                   opts("Toggle Bookmark"))
   vim.keymap.set("n", "g:",    api.node.run.cmd,                   opts("Run Command"))
-  vim.keymap.set("n", "<C-s>", api.node.open.vertical,             opts("Open: Vertical Split"))
-  vim.keymap.set("n", "<C-v>", api.node.open.horizontal,           opts("Open: Horizontal Split"))
+  vim.keymap.set("n", "<C-v>", api.node.open.vertical,             opts("Open: Vertical Split"))
+  vim.keymap.set("n", "<C-s>", api.node.open.horizontal,           opts("Open: Horizontal Split"))
   vim.keymap.set("n", "!",     api.tree.toggle_hidden_filter,      opts("Toggle Filter: Dotfiles"))
 
   -- disabled
