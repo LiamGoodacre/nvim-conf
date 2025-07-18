@@ -6,7 +6,7 @@ return {
   },
   opts = {
     defaults = {
-      mappings = require("LiamGoodacre.mapping").telescope_window_mappings(),
+      mappings = require("LiamGoodacre.mappings.telescope").telescope_window_mappings(),
     },
   },
 }

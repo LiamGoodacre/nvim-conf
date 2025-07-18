@@ -1,12 +1,12 @@
 local M = {}
 
--- Keymaps for telescope
-M.telescope_window_mappings = function()
-  return {
-    i = {
-      [""] = require("telescope.actions.layout").toggle_preview, -- AKA Ctrl-/
-    },
-  }
+M.setup = function()
+
+  vim.keymap.set("n", "<leader>bb", vim.cmd.NvimTreeToggle)
+  vim.keymap.set("n", "<leader>bf", vim.cmd.NvimTreeFindFile)
+  vim.keymap.set("n", "<leader>bo", vim.cmd.NvimTreeOpen)
+  vim.keymap.set("n", "<leader>bc", vim.cmd.NvimTreeClose)
+
 end
 
 -- Keymaps for nvim-tree
@@ -83,122 +83,5 @@ M.on_nvim_tree_attach = function(bufnr)
 
 end
 
--- Setup basic keymaps
-M.setup = function()
-
-  vim.keymap.set("n", "<Esc>", "<Cmd>nohlsearch<CR>")
-
-  vim.keymap.set("n", "<leader>w", ":w<CR>")
-
-  -- pane navigation {{{
-  vim.keymap.set("n", "<C-k>", "<C-w>k")
-  vim.keymap.set("n", "<C-l>", "<C-w>l")
-  vim.keymap.set("n", "<C-j>", "<C-w>j")
-  vim.keymap.set("n", "<C-h>", "<C-w>h")
-  vim.keymap.set("n", "<M-k>", ":<C-U>NvimTmuxNavigateUp<CR>")
-  vim.keymap.set("n", "<M-l>", ":<C-U>NvimTmuxNavigateRight<CR>")
-  vim.keymap.set("n", "<M-j>", ":<C-U>NvimTmuxNavigateDown<CR>")
-  vim.keymap.set("n", "<M-h>", ":<C-U>NvimTmuxNavigateLeft<CR>")
-  vim.keymap.set("n", "<Up>", "<C-w>k")
-  vim.keymap.set("n", "<Right>", "<C-w>l")
-  vim.keymap.set("n", "<Down>", "<C-w>j")
-  vim.keymap.set("n", "<Left>", "<C-w>h")
-  -- }}} pane navigation
-
-  -- tab control {{{
-  vim.keymap.set("n", "<leader>tn", ":tabn<CR>")
-  vim.keymap.set("n", "<leader>tp", ":tabp<CR>")
-  vim.keymap.set("n", "<leader>tN", ":tabm +1<CR>")
-  vim.keymap.set("n", "<leader>tP", ":tabm -1<CR>")
-  -- }}} tab control
-
-  -- browse {{{
-  vim.keymap.set("n", "<leader>bb", vim.cmd.NvimTreeToggle)
-  vim.keymap.set("n", "<leader>bf", vim.cmd.NvimTreeFindFile)
-  vim.keymap.set("n", "<leader>bo", vim.cmd.NvimTreeOpen)
-  vim.keymap.set("n", "<leader>bc", vim.cmd.NvimTreeClose)
-  -- }}} browse
-
-  -- finding things {{{
-  local telescope = require("telescope.builtin")
-  vim.keymap.set("n", "<leader>ff", telescope.find_files, {})
-  vim.keymap.set("n", "<leader>fh", function() telescope.find_files({ cwd = vim.fn.expand("%:p:h") }) end, {})
-  vim.keymap.set("n", "<leader>gg", telescope.git_files, {})
-  vim.keymap.set("n", "<leader>gh", function() telescope.git_files({ cwd = vim.fn.expand("%:p:h"), use_git_root = false }) end, {})
-  vim.keymap.set("n", "<C-space>", telescope.buffers, {})
-  vim.keymap.set("n", "<leader>bl", telescope.buffers, {})
-  vim.keymap.set("n", "<leader>rg", telescope.live_grep, {})
-  vim.keymap.set("n", "<leader>\"p", telescope.registers, {})
-  vim.keymap.set("n", "<leader>hk", telescope.keymaps, {})
-  vim.keymap.set("n", "<leader><C-o>", telescope.keymaps, {})
-  vim.keymap.set("n", "<leader>gb", telescope.git_branches, {})
-  vim.keymap.set("n", "<leader>ts", telescope.treesitter, {})
-  vim.keymap.set("n", "<leader>tt", telescope.builtin, {})
-  vim.keymap.set("n", "<leader>lw", telescope.lsp_references, {})
-  vim.keymap.set("n", "<leader>lt", telescope.lsp_type_definitions, {})
-  vim.keymap.set("n", "<leader>ld", telescope.lsp_definitions, {})
-  vim.keymap.set("n", "<leader>le", telescope.diagnostics, {})
-  vim.keymap.set("i", "<C-s>", telescope.symbols, {})
-  vim.keymap.set("n", "<leader><tab>", telescope.resume, {})
-  vim.keymap.set("n", "<leader>g]", require("LiamGoodacre.commands.teletag").teletag, { desc = "Telescope jump to exact tag matches" })
-  -- }}} finding things
-
-  -- harpoon {{{
-  local harpoon = require("harpoon")
-  vim.keymap.set("n", "<leader>P", function() harpoon:list():prev() end)
-  vim.keymap.set("n", "<leader>N", function() harpoon:list():next() end)
-  vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
-
-  -- basic telescope configuration
-  local telescope_config = require("telescope.config").values
-  local function toggle_telescope(harpoon_files)
-    local file_paths = {}
-    for _, item in ipairs(harpoon_files.items) do
-      table.insert(file_paths, item.value)
-    end
-
-    require("telescope.pickers").new({}, {
-      prompt_title = "Harpoon",
-      finder = require("telescope.finders").new_table({
-        results = file_paths,
-      }),
-      previewer = telescope_config.file_previewer({}),
-      sorter = telescope_config.generic_sorter({}),
-    }):find()
-  end
-
-  vim.keymap.set("n", "<leader>hh", function() toggle_telescope(harpoon:list()) end, { desc = "Open harpoon window" })
-  vim.keymap.set("n", "<leader>h2", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
-  -- }}} harpoon
-
-  -- editing configuration {{{
-  vim.api.nvim_create_user_command("Config", function()
-    vim.cmd.cd(vim.fn.stdpath("config") .. "/lua")
-    vim.cmd("e LiamGoodacre/init.lua")
-    vim.cmd.NvimTreeFindFile()
-  end, { desc = "Open nvim config", })
-
-  vim.api.nvim_create_user_command("ConfigTmux", function()
-    vim.cmd.cd(vim.fn.stdpath("config") .. "/../tmux-conf")
-    vim.cmd("e .tmux.conf")
-  end, { desc = "Open tmux config", })
-
-  vim.api.nvim_create_user_command("ConfigTerm", function()
-    vim.cmd.cd(vim.fn.stdpath("config") .. "/../ghostty")
-    vim.cmd("e config")
-  end, { desc = "Open terminal config", })
-
-  vim.api.nvim_create_user_command("ConfigScripts", function()
-    vim.cmd.cd(vim.fn.stdpath("config") .. "/../provision-conf")
-    vim.cmd("e scripts")
-  end, { desc = "Open scripts", })
-  -- }}} editing configuration
-
-  -- lsp {{{
-  vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, { desc = "Rename" })
-  vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, { desc = "Format" })
-  -- }}} lsp
-
-end
-
 return M
+

@@ -5,7 +5,7 @@ return {
   "nvim-tree/nvim-tree.lua",
   config = function()
     require("nvim-tree").setup({
-      on_attach = require("LiamGoodacre.mapping").on_nvim_tree_attach,
+      on_attach = require("LiamGoodacre.mappings.nvim-tree").on_nvim_tree_attach,
       filters = {
         enable = true,
         dotfiles = true,

@@ -48,7 +48,12 @@ end
 
 -- Require & call .setup() on each direct module under mod_prefix.
 function M.setup_modules(mod_prefix)
-  M.lsmod(mod_prefix, function (module_name) require(module_name).setup() end)
+  M.lsmod(mod_prefix, function (module_name)
+    local module = require(module_name)
+    if module.setup then
+      module.setup()
+    end
+  end)
 end
 
 return M
