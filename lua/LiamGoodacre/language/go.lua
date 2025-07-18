@@ -10,6 +10,10 @@ return {
 
     vim.lsp.config("gopls", {
       cmd = { exe, "-remote=auto" },
+      cmd_env = {
+        -- Run gopls with Go modules disabled.
+        GO111MODULE = "off",
+      },
 
       settings = {
         gopls = {
@@ -24,6 +28,9 @@ return {
           buildFlags = { "-tags=integration" }, -- for LSP support in integration tests
           staticcheck = true,
           expandWorkspaceToModule = false,
+          -- Organize imports. Groups imports by Monzo versus not-Monzo.
+          -- Equivalent to local flag with goimports
+          ["local"] = "github.com/monzo/wearedev",
         },
       },
 
@@ -49,6 +56,9 @@ return {
 
         return on_dir(vim.fn.fnamemodify(matches[1], ':p:h'))
       end,
+
+      -- Never use wearedev as a root path. It'll grind your machine to a halt.
+      ignoredRootPaths = { "$HOME/src/github.com/monzo/wearedev/" },
 
       -- Collect less information about packages without open files.
       memoryMode = "DegradeClosed",

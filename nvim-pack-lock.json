@@ -6,7 +6,8 @@
     },
     "copilot.vim": {
       "rev": "a12fd5672110c8aa7e3c8419e28c96943ca179be",
-      "src": "https://github.com/github/copilot.vim"
+      "src": "https://github.com/github/copilot.vim",
+      "version": "1.55.0 - 1.55.0"
     },
     "lay.nvim": {
       "rev": "6dade0951ba0111de6e36e240f9db2358d404d75",
