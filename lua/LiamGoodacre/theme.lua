@@ -2,7 +2,6 @@ local M = {}
 
 -- Apply theme & other visual settings
 M.setup = function()
-  local theme = "tokyonight-night"
 
   require("tokyonight").setup({
     styles = {
@@ -18,11 +17,7 @@ M.setup = function()
     end,
   })
 
-  vim.cmd.colorscheme(theme)
-
-  require('lualine').setup({
-    options = { theme = theme },
-  })
+  vim.cmd.colorscheme("tokyonight-night")
 
   local lsp_open_floating_preview = vim.lsp.util.open_floating_preview
   ---@diagnostic disable-next-line: duplicate-set-field
@@ -32,6 +27,8 @@ M.setup = function()
       format,
       vim.tbl_deep_extend("force", config or {}, { border = "rounded" }))
   end
+
+  require('lualine').setup()
 
 end
 
