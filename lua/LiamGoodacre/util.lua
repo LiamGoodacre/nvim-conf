@@ -31,4 +31,24 @@ function M.lsmod(mod_prefix, fn)
   end
 end
 
+function M.fold_modules(mod_prefix, fn, start)
+  local results = start or {}
+
+  M.lsmod(
+    mod_prefix,
+    function(language_module)
+      for _, entry in ipairs(fn(language_module) or {}) do
+        table.insert(results, entry)
+      end
+    end
+  )
+
+  return results
+end
+
+-- Require & call .setup() on each direct module under mod_prefix.
+function M.setup_modules(mod_prefix)
+  M.lsmod(mod_prefix, function (module_name) require(module_name).setup() end)
+end
+
 return M

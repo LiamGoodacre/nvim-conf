@@ -3,41 +3,29 @@ local M = {}
 -- Discovers all required LSPs from LiamGoodacre.languages modules.
 -- See ../plugins/mason-lsp.lua
 M.mason_lspconfig = function()
-  local ensure_installed = {}
+  local lspconfig = {}
 
-  require("LiamGoodacre.util").lsmod(
+  lspconfig.ensure_installed = require("LiamGoodacre.util").fold_modules(
     "LiamGoodacre.languages",
-    function(language_module)
-      for _, lsp in ipairs(require(language_module).lsps or {}) do
-        table.insert(ensure_installed, lsp)
-      end
-    end
+    function(language_module) return require(language_module).lsps end,
+    {}
   )
 
-  return {
-    ensure_installed = ensure_installed,
-  }
+  return lspconfig
 end
 
 -- Discovers all required tools from LiamGoodacre.languages modules.
 -- See ../plugins/mason-lsp.lua
 M.mason_tool_installer = function()
-  local ensure_installed = {
-    "tree-sitter-cli",
-  }
+  local tools = {}
 
-  require("LiamGoodacre.util").lsmod(
+  tools.ensure_installed = require("LiamGoodacre.util").fold_modules(
     "LiamGoodacre.languages",
-    function(language_module)
-      for _, tool in ipairs(require(language_module).tools or {}) do
-        table.insert(ensure_installed, tool)
-      end
-    end
+    function(language_module) return require(language_module).tools end,
+    { "tree-sitter-cli" }
   )
 
-  return {
-    ensure_installed = ensure_installed,
-  }
+  return tools
 end
 
 -- see ../plugins/treesitter.lua
@@ -90,10 +78,7 @@ M.treesitter_config = {
 
 -- Setup all LiamGoodacre.languages modules
 M.setup = function()
-  require("LiamGoodacre.util").lsmod(
-    "LiamGoodacre.languages",
-    function(language_module) require(language_module).setup() end
-  )
+  require("LiamGoodacre.util").setup_modules("LiamGoodacre.languages")
 end
 
 return M
