@@ -1,3 +1,3 @@
 return {
-  lsps = {"purescriptls"},
+  lsps = {}, -- {"purescriptls"},
 }

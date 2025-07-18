@@ -9,6 +9,7 @@ M.setup = function()
     "LiamGoodacre.components",
     "LiamGoodacre.mappings...",
     "LiamGoodacre.languages",
+    "LiamGoodacre.monzo",
   })
 
 end

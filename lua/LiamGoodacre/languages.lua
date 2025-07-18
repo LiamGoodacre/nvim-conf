@@ -40,7 +40,7 @@ local treesitter_parsers = {
   "vimdoc",
   "xml",
   "yaml",
-  "zig",
+  -- "zig",
 }
 
 --- Register language integrations and start Treesitter by filetype.

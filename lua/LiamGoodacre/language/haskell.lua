@@ -2,10 +2,10 @@ local haskell = "LiamGoodacre-haskell"
 local hspattern = { haskell, "*.hs", "*.lhs" }
 local pattern = { haskell, "*.hs", "*.lhs", "*.cabal" }
 
-local use_hls = true
+local use_hls = false
 
-local format_with = "ormolu" -- can be "ormolu", "bormolu-format", or "lsp"
-local format_on = "BufWritePre"
+local format_with = "bormolu-format" -- can be "ormolu", "bormolu-format", or "lsp"
+local format_on = "BufWritePost"
 
 local using_git_root = function(k)
   local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
@@ -22,16 +22,16 @@ local update_tags = function()
   end
 
   using_git_root(function(git_root)
-    vim.fn.jobstart({ "hasktags-parallel" }, {
+    vim.fn.jobstart({ "hasktags-git" }, {
       cwd = git_root,
       stdout_buffered = true,
       on_exit = function(_, code)
         if code ~= 0 then
-          vim.notify("hasktags-parallel failed with code: " .. code, vim.log.levels.ERROR)
+          vim.notify("hasktags failed with code: " .. code, vim.log.levels.ERROR)
           return
         end
 
-        -- vim.notify("tags updated via hasktags-parallel", vim.log.levels.OFF)
+        -- vim.notify("tags updated via hasktags", vim.log.levels.OFF)
       end,
     })
   end)

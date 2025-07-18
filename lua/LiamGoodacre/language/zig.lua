@@ -1,3 +1,3 @@
 return {
-  lsps = {"zls"},
+  lsps = {}, -- {"zls"},
 }
