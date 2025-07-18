@@ -1,5 +1,5 @@
 return {
-  "github/copilot.vim",
+  "github/copilot.vim", tag = "v1.55.0", -- later than 1.56 requires node 22+
   config = function()
     -- Disable copilot auto-suggestions.
     -- We'll explicitly request a suggestion via mappings.

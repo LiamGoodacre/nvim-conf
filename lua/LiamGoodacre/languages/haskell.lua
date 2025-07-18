@@ -2,10 +2,10 @@ local haskell = "LiamGoodacre-haskell"
 local hspattern = { haskell, "*.hs", "*.lhs" }
 local pattern = { haskell, "*.hs", "*.lhs", "*.cabal" }
 
-local use_hls = true
+local use_hls = false
 
-local format_with = "ormolu" -- can be "ormolu", "bormolu-format", or "lsp"
-local format_on = "BufWritePre"
+local format_with = "bormolu-format" -- can be "ormolu", "bormolu-format", or "lsp"
+local format_on = "BufWritePost"
 
 local using_git_root = function(k)
   local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
