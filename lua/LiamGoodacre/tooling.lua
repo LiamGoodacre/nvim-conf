@@ -1,5 +1,6 @@
 local M = {}
 
+-- Mason, lsps, other tools
 M.setup = function()
 
   require("mason").setup()
