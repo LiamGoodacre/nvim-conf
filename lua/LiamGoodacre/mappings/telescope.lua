@@ -1,10 +1,13 @@
 local M = {}
 
 M.telescope_window_mappings = function()
+  local common = {
+    [""] = require("telescope.actions.layout").toggle_preview, -- AKA Ctrl-/
+  }
+
   return {
-    i = {
-      [""] = require("telescope.actions.layout").toggle_preview, -- AKA Ctrl-/
-    },
+    n = common,
+    i = common,
   }
 end
 
