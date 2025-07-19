@@ -1,5 +1,7 @@
+local M = {}
+
 -- replicating :tselect but with telescope
-local function teletag(opts)
+M.teletag = function(opts)
   local word = vim.fn.expand("<cword>")
   local matches = vim.fn.taglist("^" .. word .. "$")
   if vim.tbl_isempty(matches) then
@@ -43,8 +45,4 @@ local function teletag(opts)
   }, opts))
 end
 
-return {
-  teletag = teletag,
-  setup = function()
-  end,
-}
+return M

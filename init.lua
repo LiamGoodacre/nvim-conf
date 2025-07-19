@@ -1,1 +1,1 @@
-require("LiamGoodacre")
+require("LiamGoodacre").setup()

@@ -37,9 +37,21 @@ function M.fold_modules(mod_prefix, fn, start)
   M.lsmod(
     mod_prefix,
     function(language_module)
-      for _, entry in ipairs(fn(language_module) or {}) do
-        table.insert(results, entry)
-      end
+      vim.list_extend(results, fn(language_module) or {})
+    end
+  )
+
+  return results
+end
+
+
+function M.fold_merge_modules(mod_prefix, fn, start)
+  local results = start or {}
+
+  M.lsmod(
+    mod_prefix,
+    function(language_module)
+      results = vim.tbl_deep_extend("force", results, fn(language_module) or {})
     end
   )
 

@@ -1,5 +1,6 @@
+local M = {}
 
-local function TSQ_each(opts, op)
+M.TSQ_each = function(opts, op)
   local split = vim.split(opts.args, "/", { plain = true, trimempty = true })
   local which_end = split[1]
   local query = split[2]
@@ -34,14 +35,14 @@ local function TSQ_each(opts, op)
   end
 end
 
-local function TSQ_command(opts)
-  TSQ_each(opts, function(_, row, col, command)
+M.TSQ_command = function(opts)
+  M.TSQ_each(opts, function(_, row, col, command)
     vim.api.nvim_win_set_cursor(0, {row, col})
     vim.cmd(command)
   end)
 end
 
-local function TSQ_command_preview(exec)
+M.TSQ_command_preview = function(exec)
   return function (opts, preview_ns)
     local function cursorat(row, col)
       vim.hl.range(0, preview_ns, "Underlined",
@@ -49,7 +50,7 @@ local function TSQ_command_preview(exec)
         { row - 1, col + 1 })
     end
 
-    TSQ_each(opts, function(coord, row, col, command)
+    M.TSQ_each(opts, function(coord, row, col, command)
       local start_row, start_col, end_row, end_col = unpack(coord)
 
       vim.hl.range(0, preview_ns, "Changed",
@@ -73,25 +74,24 @@ local function TSQ_command_preview(exec)
   end
 end
 
-local function setup()
-  vim.api.nvim_create_user_command("TSQ", TSQ_command, {
+M.setup = function()
+  vim.api.nvim_create_user_command("TSQ", M.TSQ_command, {
     range = true,
     nargs = "+",
     desc = "Run a command on tree-sitter query matches",
-    preview = TSQ_command_preview(false),
+    preview = M.TSQ_command_preview(false),
   })
 
-  vim.api.nvim_create_user_command("TSQx", TSQ_command, {
+  vim.api.nvim_create_user_command("TSQx", M.TSQ_command, {
     range = true,
     nargs = "+",
     desc = "Run a command on tree-sitter query matches (previewing the command)",
-    preview = TSQ_command_preview(true),
+    preview = M.TSQ_command_preview(true),
   })
 end
 
-return {
-  TSQ_each = TSQ_each,
-  TSQ_command = TSQ_command,
-  TSQ_command_preview = TSQ_command_preview,
-  setup = setup,
+M.live_commands = {
+  Tsq = { cmd = "TSQ" },
 }
+
+return M
