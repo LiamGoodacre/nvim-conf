@@ -1,11 +1,19 @@
 local M = {}
 
+local nvim_conf_git_log = function()
+  local text = vim.system(
+    { "git", "log", "--oneline", "-5", "--format=[%h] %s" },
+    { cwd = vim.fn.stdpath("config") }
+  ):wait().stdout or ""
+
+  return vim.fn.split(text, "\n", true)
+end
+
 M.setup = function()
   local alpha = require("alpha")
   local alpha_dashboard = require("alpha.themes.dashboard")
 
   alpha_dashboard.section.header.opts.hl = "Character"
-
   alpha_dashboard.section.header.val = {
     "█████    █████",
     " ███      ███ ",
@@ -20,6 +28,9 @@ M.setup = function()
     "     ⣀⣤⣤⣀     ",
     "     ⠈⠉⠉⠁     ",
   }
+
+  alpha_dashboard.section.footer.opts.hl = "Character"
+  alpha_dashboard.section.footer.val = nvim_conf_git_log()
 
   alpha_dashboard.section.buttons.val = {
     alpha_dashboard.button("n",       "  Σ :New", "<Cmd>ene<CR>"),
