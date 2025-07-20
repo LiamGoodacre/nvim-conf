@@ -38,6 +38,7 @@ M.setup = function()
       "query",
       "regex",
       "rst",
+      "rust",
       "scss",
       "sql",
       "terraform",
