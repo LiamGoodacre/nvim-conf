@@ -49,6 +49,7 @@ M.setup = function()
       "vimdoc",
       "xml",
       "yaml",
+      "zig",
     },
   })
 
