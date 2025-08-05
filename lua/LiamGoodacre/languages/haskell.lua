@@ -17,6 +17,10 @@ local using_git_root = function(k)
 end
 
 local update_tags = function()
+  if vim.g.block_tags then
+    return
+  end
+
   using_git_root(function(git_root)
     vim.fn.jobstart({ "hasktags-parallel" }, {
       cwd = git_root,
@@ -34,11 +38,6 @@ local update_tags = function()
 end
 
 local ormolu_on_buffer = function()
-  -- check the global flag to see if formatting is enabled
-  if vim.g.block_formatting then
-    return
-  end
-
   local filename = vim.fn.expand("%:p")
   local filetype = vim.bo.filetype
   if filetype == haskell or filetype == "haskell" then
@@ -80,6 +79,11 @@ local bormolu_format = function()
 end
 
 local format = function()
+  -- check the global flag to see if formatting is enabled
+  if vim.g.block_formatting then
+    return
+  end
+
   if format_with == "ormolu" then
     ormolu_on_buffer()
   elseif format_with == "bormolu-format" then
