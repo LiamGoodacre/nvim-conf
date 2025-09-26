@@ -5,6 +5,6 @@ return {
     local zig = "zig"
     vim.filetype.add({ extension = { zig = zig } })
     vim.treesitter.language.register("zig", zig)
-    require("lspconfig").zig.setup({ filetypes = { zig } })
+    vim.lsp.config("zig", { filetypes = { zig } })
   end,
 }

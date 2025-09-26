@@ -104,7 +104,7 @@ return {
     vim.treesitter.language.register("haskell", haskell)
 
     if use_hls then
-      require("lspconfig").hls.setup({
+      vim.lsp.config("hls", {
         filetypes = { haskell, "haskell", "lhaskell", "cabal" },
         settings = {
           [haskell] = {

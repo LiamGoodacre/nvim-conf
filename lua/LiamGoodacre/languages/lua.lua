@@ -9,7 +9,7 @@ return {
     -- Copied from:
     -- https://github.com/neovim/nvim-lspconfig/blob/216deb2d1b5fbf24398919228208649bbf5cbadf/doc/server_configurations.md#lua_ls
 
-    require("lspconfig").lua_ls.setup({
+    vim.lsp.config("lua_ls", {
       filetypes = { lua },
       on_init = function(client)
         local path = client.workspace_folders[1].name

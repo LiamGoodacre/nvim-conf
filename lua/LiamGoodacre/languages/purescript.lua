@@ -4,6 +4,6 @@ return {
     local purescript = "LiamGoodacre-purescript"
     vim.filetype.add({ extension = { purs = purescript } })
     vim.treesitter.language.register("purescript", purescript)
-    require("lspconfig").purescriptls.setup({ filetypes = { purescript } })
+    vim.lsp.config("purescriptls", { filetypes = { purescript } })
   end,
 }

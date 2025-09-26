@@ -9,6 +9,6 @@ return {
     local python = "LiamGoodacre-python"
     vim.filetype.add({ extension = { py = python } })
     vim.treesitter.language.register("python", python)
-    require("lspconfig").pyright.setup({ filetypes = { python } })
+    vim.lsp.config("pyright", { filetypes = { python } })
   end,
 }

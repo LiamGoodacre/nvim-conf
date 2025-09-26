@@ -4,6 +4,6 @@ return {
     local bash = "LiamGoodacre-bash"
     vim.filetype.add({ extension = { sh = bash } })
     vim.treesitter.language.register("bash", bash)
-    require("lspconfig").bashls.setup({ filetypes = { bash } })
+    vim.lsp.config("bashls", { filetypes = { bash } })
   end,
 }

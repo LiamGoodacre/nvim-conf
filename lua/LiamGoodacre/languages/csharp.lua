@@ -5,7 +5,7 @@ return {
     vim.filetype.add({ extension = { cs = cs } })
     vim.treesitter.language.register("c_sharp", cs)
 
-    require("lspconfig").omnisharp.setup({
+    vim.lsp.config("omnisharp", {
       filetypes = { cs },
       cmd = {
         vim.fn.exepath("OmniSharp"),
