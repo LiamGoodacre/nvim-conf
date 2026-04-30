@@ -3,10 +3,15 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-telescope/telescope-symbols.nvim',
+    'nvim-telescope/telescope-ui-select.nvim',
   },
-  opts = {
-    defaults = {
-      mappings = require("LiamGoodacre.mappings.telescope").telescope_window_mappings(),
-    },
-  },
+  config = function()
+    require("telescope").setup({
+      defaults = {
+        mappings = require("LiamGoodacre.mappings.telescope").telescope_window_mappings(),
+      },
+    })
+
+    require("telescope").load_extension("ui-select")
+  end,
 }
