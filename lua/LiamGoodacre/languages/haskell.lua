@@ -97,12 +97,13 @@ end
 
 return {
   lsps = ({[true] = {"hls"}, [false] = {}})[use_hls],
-  treesitter_filetypes = { haskell },
+  treesitter_registers = {
+    { parser = "haskell", filetype = haskell },
+  },
   update_tags = update_tags,
   format = format,
   setup = function()
     vim.filetype.add({ extension = { hs = haskell, lhs = haskell } })
-    vim.treesitter.language.register("haskell", haskell)
 
     if use_hls then
       vim.lsp.config("hls", {

@@ -1,14 +1,13 @@
-local cs = "cs"
-local c_sharp = "c_sharp"
+local filetype = "cs"
 
 return {
   lsps = {"omnisharp"},
-  treesitter_filetypes = { cs },
+  treesitter_registers = {
+    { parser = "c_sharp", filetype = filetype },
+  },
   setup = function()
-    vim.treesitter.language.register(c_sharp, cs)
-
     vim.lsp.config("omnisharp", {
-      filetypes = { cs },
+      filetypes = { filetype },
       cmd = {
         vim.fn.exepath("OmniSharp"),
         "-z",

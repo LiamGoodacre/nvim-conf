@@ -10,7 +10,7 @@ M.setup = function()
       require("LiamGoodacre.util").fold_modules(
         "LiamGoodacre.languages",
         function(language_module)
-          return require(language_module).lsps
+          return language_module.lsps
         end,
         {}
       ),
@@ -21,7 +21,7 @@ M.setup = function()
       require("LiamGoodacre.util").fold_modules(
         "LiamGoodacre.languages",
         function(language_module)
-          return require(language_module).tools
+          return language_module.tools
         end,
         { "tree-sitter-cli" }
       ),

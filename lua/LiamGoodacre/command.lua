@@ -9,7 +9,7 @@ M.setup = function()
       require("LiamGoodacre.util").fold_merge_modules(
         "LiamGoodacre.commands",
         function(command_module)
-          return require(command_module).live_commands
+          return command_module.live_commands
         end,
         {
           G = { cmd = "g" },
