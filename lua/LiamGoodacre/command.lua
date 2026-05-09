@@ -2,15 +2,18 @@ local M = {}
 
 M.setup = function()
 
-  require("LiamGoodacre.util").setup_modules("LiamGoodacre.commands")
+  local util = require("LiamGoodacre.util")
+
+  util.setup_modules("LiamGoodacre.commands")
 
   require("live-command").setup({
     commands =
-      require("LiamGoodacre.util").fold_merge_modules(
-        "LiamGoodacre.commands",
-        function(command_module)
-          return command_module.live_commands
-        end,
+      util.iter_fold_merge(
+        util.modules("LiamGoodacre.commands"):map(
+          function(command_module)
+            return command_module.live_commands or {}
+          end
+        ),
         {
           G = { cmd = "g" },
           V = { cmd = "v" },

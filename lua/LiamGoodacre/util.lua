@@ -36,39 +36,35 @@ function M.find_module_names(mod_prefix)
   return vim.iter(modules:totable())
 end
 
-function M.require_modules(mod_prefix)
+
+-- Make an iterator of required modules under some prefix
+function M.modules(mod_prefix)
   return M.find_module_names(mod_prefix):map(require)
 end
 
-function M.fold_modules(mod_prefix, fn, start)
-  return vim.list_extend(start or {},
-    M.require_modules(mod_prefix):map(
-      function(language_module)
-        return fn(language_module) or {}
-      end
-    ):flatten(1):totable()
-  )
-end
 
-function M.fold_merge_modules(mod_prefix, fn, start)
+-- Merge tables produced by an iterator
+function M.iter_fold_merge(iter, start)
   local results = start or {}
 
-  M.require_modules(mod_prefix):each(
-    function(language_module)
-      results = vim.tbl_deep_extend("force", results, fn(language_module) or {})
-    end
-  )
+  iter:each(function(item)
+    results = vim.tbl_deep_extend("force", results, item or {})
+  end)
 
   return results
 end
 
+
+-- Call setup on a module if it exists
+function M.call_setup(module)
+  if module.setup then
+    module.setup()
+  end
+end
+
 -- Require & call .setup() on each direct module under mod_prefix.
 function M.setup_modules(mod_prefix)
-  M.require_modules(mod_prefix):each(function (module)
-    if module.setup then
-      module.setup()
-    end
-  end)
+  M.modules(mod_prefix):each(M.call_setup)
 end
 
 return M

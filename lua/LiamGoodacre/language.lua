@@ -45,18 +45,20 @@ local treesitter_parsers = {
 
 M.setup = function()
 
-  local treesitter_registers = require("LiamGoodacre.util").fold_modules(
-    "LiamGoodacre.languages",
-    function(language_module)
-      return language_module.treesitter_registers
-    end
-  )
+  local util = require("LiamGoodacre.util")
+
+  local treesitter_registers =
+    util.modules("LiamGoodacre.languages"):map(
+      function(language_module)
+        return language_module.treesitter_registers or {}
+      end
+    ):flatten(1):totable()
 
   vim.iter(treesitter_registers):each(function(register)
     vim.treesitter.language.register(register.parser, register.filetype)
   end)
 
-  require("LiamGoodacre.util").setup_modules("LiamGoodacre.languages")
+  util.setup_modules("LiamGoodacre.languages")
 
   require("nvim-treesitter").install(treesitter_parsers)
 

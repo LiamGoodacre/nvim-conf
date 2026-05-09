@@ -5,25 +5,26 @@ M.setup = function()
 
   require("mason").setup()
 
+  local util = require("LiamGoodacre.util")
+
   require("mason-lspconfig").setup({
     ensure_installed =
-      require("LiamGoodacre.util").fold_modules(
-        "LiamGoodacre.languages",
+      util.modules("LiamGoodacre.languages"):map(
         function(language_module)
-          return language_module.lsps
-        end,
-        {}
-      ),
+          return language_module.lsps or {}
+        end
+      ):flatten(1):totable(),
   })
 
   require("mason-tool-installer").setup({
     ensure_installed =
-      require("LiamGoodacre.util").fold_modules(
-        "LiamGoodacre.languages",
-        function(language_module)
-          return language_module.tools
-        end,
-        { "tree-sitter-cli" }
+      vim.list_extend(
+        { "tree-sitter-cli" },
+        util.modules("LiamGoodacre.languages"):map(
+          function(language_module)
+            return language_module.tools or {}
+          end
+        ):flatten(1):totable()
       ),
   })
 
