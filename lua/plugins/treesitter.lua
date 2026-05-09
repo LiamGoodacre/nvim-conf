@@ -1,7 +1,7 @@
 return {
-  "nvim-treesitter/nvim-treesitter",
-
-  build = function()
-    require("nvim-treesitter.install").update({ with_sync = true })()
-  end,
+  "neovim-treesitter/nvim-treesitter",
+  name = "nvim-treesitter",
+  dependencies = { "neovim-treesitter/treesitter-parser-registry" },
+  lazy = false,
+  build = ":TSUpdate",
 }
