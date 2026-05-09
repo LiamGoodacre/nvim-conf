@@ -44,15 +44,11 @@ local treesitter_parsers = {
 }
 
 local treesitter_filetypes = vim.list_extend({
-  "LiamGoodacre-bash",
-  "LiamGoodacre-csharp",
   "LiamGoodacre-haskell",
-  "LiamGoodacre-lua",
   "LiamGoodacre-markdown",
-  "LiamGoodacre-purescript",
   "LiamGoodacre-python",
-  "LiamGoodacre-typescript",
-  "LiamGoodacre-zig",
+  "cs",
+  "sh",
 }, vim.deepcopy(treesitter_parsers))
 
 M.setup = function()
