@@ -97,6 +97,7 @@ end
 
 return {
   lsps = ({[true] = {"hls"}, [false] = {}})[use_hls],
+  treesitter_filetypes = { haskell },
   update_tags = update_tags,
   format = format,
   setup = function()

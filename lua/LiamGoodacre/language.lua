@@ -43,18 +43,18 @@ local treesitter_parsers = {
   "zig",
 }
 
-local treesitter_filetypes = vim.list_extend({
-  "LiamGoodacre-haskell",
-  "LiamGoodacre-markdown",
-  "LiamGoodacre-python",
-  "cs",
-  "sh",
-}, vim.deepcopy(treesitter_parsers))
-
 M.setup = function()
   require("LiamGoodacre.util").setup_modules("LiamGoodacre.languages")
 
   require("nvim-treesitter").install(treesitter_parsers)
+
+  local treesitter_filetypes = require("LiamGoodacre.util").fold_modules(
+    "LiamGoodacre.languages",
+    function(language_module)
+      return require(language_module).treesitter_filetypes
+    end,
+    vim.deepcopy(treesitter_parsers)
+  )
 
   vim.api.nvim_create_autocmd("FileType", {
     pattern = treesitter_filetypes,
