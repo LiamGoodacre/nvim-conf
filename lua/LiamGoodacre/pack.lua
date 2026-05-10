@@ -40,7 +40,6 @@ function M.setup()
     confirm = false,
   })
 
-  -- Currently there are seemingly no issues loading in any order
   vim.iter(M.specs):each(function(s)
     vim.cmd.packadd(s.name)
   end)
