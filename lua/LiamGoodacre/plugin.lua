@@ -23,7 +23,7 @@ M.setup = function()
 
   -- Setup lazy.nvim
   require("lazy").setup({
-    spec = { { import = "plugins" } },
+    spec = { { import = "LiamGoodacre.plugins" } },
     pkg = { sources = { "lazy", "packspec" } },
     rocks = { enabled = false },
     checker = { enabled = false },
