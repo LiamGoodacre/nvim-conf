@@ -7,6 +7,38 @@ M.setup = function()
   end, { desc = "Update packages" })
 
 
+  vim.api.nvim_create_user_command("PackListActive", function()
+    local actives =
+      vim.iter(vim.pack.get())
+        :filter(function(p) return p.active end)
+        :map(function(p) return p.spec.name end)
+        :totable()
+
+    if #actives == 0 then
+      vim.notify("No active packages.")
+      return
+    end
+
+    vim.notify(vim.iter(actives):join("\n"))
+  end, { desc = "List active packages" })
+
+
+  vim.api.nvim_create_user_command("PackListInactive", function()
+    local inactives =
+      vim.iter(vim.pack.get())
+        :filter(function(p) return not p.active end)
+        :map(function(p) return p.spec.name end)
+        :totable()
+
+    if #inactives == 0 then
+      vim.notify("No inactive packages.")
+      return
+    end
+
+    vim.notify(vim.iter(inactives):join("\n"))
+  end, { desc = "List inactive packages" })
+
+
   vim.api.nvim_create_user_command("PackPrune", function()
     local inactives =
       vim.iter(vim.pack.get())
@@ -14,20 +46,21 @@ M.setup = function()
         :map(function(p) return p.spec.name end)
         :totable()
 
-    if not inactives then
+    if #inactives == 0 then
       vim.notify("No inactive packages")
       return
     end
 
     vim.ui.select(
       inactives,
-      {
-        prompt = "Select inactive package delete",
-      },
-      function(item)
-        if item then
-          vim.pack.del({ item })
+      { prompt = "Select inactive package delete" },
+      function(selected)
+        if not selected then
+          vim.notify("No package selected")
+          return
         end
+
+        vim.pack.del({ selected })
       end
     )
   end, { desc = "Remove inactive packages" })
