@@ -31,6 +31,9 @@ return {
               vim.api.nvim_get_runtime_file("lua", true)),
           },
           diagnostics = {
+            unusedLocalExclude = {
+              "_*",
+            },
             disable = {
               "different-requires",
             },
