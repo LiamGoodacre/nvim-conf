@@ -80,11 +80,8 @@ function M.table_merge_rtl(lhs, rhs)
 end
 
 
----@class SetupModule
----@field setup nil|fun()
-
 --- Call .setup() on a module if it exists
----@param module SetupModule
+---@param module {setup: nil|fun()}
 ---@return nil
 function M.call_setup(module)
   if module.setup then
@@ -98,6 +95,24 @@ end
 ---@return nil
 function M.setup_modules(mod_prefix)
   M.iter_modules(mod_prefix):each(M.call_setup)
+end
+
+
+--- Call .before_load() on a module if it exists
+---@param module {before_load: nil|fun()}
+---@return nil
+function M.call_before_load(module)
+  if module.before_load then
+    module.before_load()
+  end
+end
+
+
+--- Require & call .before_load() on each direct module under mod_prefix.
+---@param mod_prefix string
+---@return nil
+function M.before_load_modules(mod_prefix)
+  M.iter_modules(mod_prefix):each(M.call_before_load)
 end
 
 return M
