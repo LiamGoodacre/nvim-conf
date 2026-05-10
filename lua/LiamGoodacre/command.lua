@@ -12,15 +12,13 @@ M.setup = function()
 
   require("live-command").setup({
     commands =
-      util.iter_fold_merge(
-        util.iter_modules("LiamGoodacre.commands")
-          :map(get_live_commands),
-        {
+      util.iter_modules("LiamGoodacre.commands")
+        :map(get_live_commands)
+        :fold({
           G = { cmd = "g" },
           V = { cmd = "v" },
           Norm = { cmd = "norm" },
-        }
-      )
+        }, util.table_merge_rtl)
   })
 
 end

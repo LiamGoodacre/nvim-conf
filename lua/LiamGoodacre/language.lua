@@ -64,6 +64,7 @@ M.setup = function()
   local treesitter_filetypes = vim.list_extend(
     vim.iter(treesitter_registers)
       :map(function(r) return r.filetype end)
+      :flatten(1)
       :totable(),
     vim.deepcopy(treesitter_parsers)
   )

@@ -71,16 +71,12 @@ function M.iter_modules(mod_prefix)
 end
 
 
---- Merge tables produced by an iterator
----@param iter Iter
----@param start nil|table
+--- Mutate lhs by overwriting entries from rhs.
+---@param lhs table
+---@param rhs table
 ---@return table
-function M.iter_fold_merge(iter, start)
-  ---@type table
-  local start_table = start or {}
-  return iter:fold(start_table, function(acc, item)
-    return vim.tbl_deep_extend("force", acc, item or {})
-  end)
+function M.table_merge_rtl(lhs, rhs)
+  return vim.tbl_deep_extend("force", lhs or {}, rhs or {})
 end
 
 
