@@ -1,6 +1,6 @@
 local M = {}
 
-function M.setup()
+function M.after_load()
   require("nvim-tmux-navigation").setup({})
 end
 

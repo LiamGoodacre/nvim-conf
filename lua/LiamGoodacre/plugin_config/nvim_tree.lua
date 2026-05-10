@@ -1,12 +1,12 @@
 local M = {}
 
-function M.presetup()
+function M.before_load()
   vim.g.loaded_netrw = 1
   vim.g.loaded_netrwPlugin = 1
 end
 
 
-function M.setup()
+function M.after_load()
   require("nvim-tree").setup({
     on_attach = require("LiamGoodacre.mappings.nvim-tree").on_nvim_tree_attach,
     filters = {

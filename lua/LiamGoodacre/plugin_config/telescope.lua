@@ -1,6 +1,6 @@
 local M = {}
 
-function M.setup()
+function M.after_load()
   require("telescope").setup({
     defaults = {
       mappings = require("LiamGoodacre.mappings.telescope").telescope_window_mappings(),

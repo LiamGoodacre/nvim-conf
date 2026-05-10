@@ -1,10 +1,22 @@
 local M = {}
 
+local function before_load(s) return s.before_load end
+local function after_load(s) return s.after_load end
+
 M.setup = function()
+
   local util = require("LiamGoodacre.util")
-  util.presetup_modules("LiamGoodacre.plugin_config")
+
+  util.iter_modules("LiamGoodacre.plugin_config")
+    :map(before_load)
+    :each(util.call)
+
   require("LiamGoodacre.pack").setup()
-  util.setup_modules("LiamGoodacre.plugin_config")
+
+  util.iter_modules("LiamGoodacre.plugin_config")
+    :map(after_load)
+    :each(util.call)
+
 end
 
 return M

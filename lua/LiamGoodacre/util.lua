@@ -80,39 +80,36 @@ function M.table_merge_rtl(lhs, rhs)
 end
 
 
---- Call .setup() on a module if it exists
----@param module {setup: nil|fun()}
+--- Call a function with no arguments.
+---@param f function
+function M.call(f)
+  return f()
+end
+
+
+--- Require & call .setup() on modules
+---@param ... string|string[]
 ---@return nil
-function M.call_setup(module)
-  if module.setup then
-    module.setup()
-  end
+function M.setup_modules(...)
+  vim.iter({...})
+    :flatten(1)
+    :map(require)
+    :map(function(m) return m.setup end)
+    :each(M.call)
 end
 
 
 --- Require & call .setup() on each direct module under mod_prefix.
----@param mod_prefix string
+---@param ... string|string[]
 ---@return nil
-function M.setup_modules(mod_prefix)
-  M.iter_modules(mod_prefix):each(M.call_setup)
-end
-
-
---- Call .presetup() on a module if it exists
----@param module {presetup: nil|fun()}
----@return nil
-function M.call_presetup(module)
-  if module.presetup then
-    module.presetup()
-  end
-end
-
-
---- Require & call .presetup() on each direct module under mod_prefix.
----@param mod_prefix string
----@return nil
-function M.presetup_modules(mod_prefix)
-  M.iter_modules(mod_prefix):each(M.call_presetup)
+function M.setup_submodules(...)
+  vim.iter({...})
+    :flatten(1)
+    :each(function (mod_prefix)
+      M.iter_modules(mod_prefix)
+        :map(function(m) return m.setup end)
+        :each(M.call)
+    end)
 end
 
 return M

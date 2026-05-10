@@ -4,7 +4,7 @@ M.setup = function()
 
   local util = require("LiamGoodacre.util")
 
-  util.setup_modules("LiamGoodacre.commands")
+  util.setup_submodules("LiamGoodacre.commands")
 
   local function get_live_commands(command_module)
     return command_module.live_commands or {}

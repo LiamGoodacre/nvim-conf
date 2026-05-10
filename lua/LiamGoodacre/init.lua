@@ -1,14 +1,21 @@
 local M = {}
 
 M.setup = function()
-  require("LiamGoodacre.setting").setup()
-  require("LiamGoodacre.plugin").setup()
-  require("LiamGoodacre.theme").setup()
-  require("LiamGoodacre.tooling").setup()
-  require("LiamGoodacre.command").setup()
-  require("LiamGoodacre.util").setup_modules("LiamGoodacre.mappings")
-  require("LiamGoodacre.language").setup()
-  require("LiamGoodacre.dashboard").setup()
+  local util = require("LiamGoodacre.util")
+  util.setup_modules({
+    "LiamGoodacre.setting",
+    "LiamGoodacre.plugin",
+    "LiamGoodacre.theme",
+    "LiamGoodacre.tooling",
+    "LiamGoodacre.command",
+  })
+  util.setup_submodules({
+    "LiamGoodacre.mappings",
+  })
+  util.setup_modules({
+    "LiamGoodacre.language",
+    "LiamGoodacre.dashboard",
+  })
 end
 
 return M

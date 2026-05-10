@@ -57,7 +57,7 @@ M.setup = function()
     vim.treesitter.language.register(register.parser, register.filetype)
   end)
 
-  util.setup_modules("LiamGoodacre.languages")
+  util.setup_submodules("LiamGoodacre.languages")
 
   require("nvim-treesitter").install(treesitter_parsers)
 
