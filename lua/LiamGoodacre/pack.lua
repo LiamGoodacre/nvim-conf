@@ -1,5 +1,6 @@
 local M = {}
 
+-- Copied from normalize_spec in vim.pack
 local function nominalise(spec)
   local name = spec.name or spec.src:gsub("%.git$", "")
   spec.name = (type(name) == "string" and name or ""):match("[^/]+$") or ""
