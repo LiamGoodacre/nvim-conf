@@ -98,21 +98,21 @@ function M.setup_modules(mod_prefix)
 end
 
 
---- Call .before_load() on a module if it exists
----@param module {before_load: nil|fun()}
+--- Call .presetup() on a module if it exists
+---@param module {presetup: nil|fun()}
 ---@return nil
-function M.call_before_load(module)
-  if module.before_load then
-    module.before_load()
+function M.call_presetup(module)
+  if module.presetup then
+    module.presetup()
   end
 end
 
 
---- Require & call .before_load() on each direct module under mod_prefix.
+--- Require & call .presetup() on each direct module under mod_prefix.
 ---@param mod_prefix string
 ---@return nil
-function M.before_load_modules(mod_prefix)
-  M.iter_modules(mod_prefix):each(M.call_before_load)
+function M.presetup_modules(mod_prefix)
+  M.iter_modules(mod_prefix):each(M.call_presetup)
 end
 
 return M

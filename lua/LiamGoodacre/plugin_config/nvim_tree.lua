@@ -1,9 +1,10 @@
 local M = {}
 
-function M.before_load()
+function M.presetup()
   vim.g.loaded_netrw = 1
   vim.g.loaded_netrwPlugin = 1
 end
+
 
 function M.setup()
   require("nvim-tree").setup({
