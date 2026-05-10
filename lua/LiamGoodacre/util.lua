@@ -55,7 +55,7 @@ end
 --- Scan for module names directly under some prefix
 ---@param mod_prefix string
 ---@return table table array of module names
-function M.find_module_names(mod_prefix)
+function M.find_submodule_names(mod_prefix)
   return M.iter_dir(M.module_prefix_to_path(mod_prefix))
     :map(M.resolve_module_file_name(mod_prefix))
     :totable()
@@ -65,8 +65,8 @@ end
 --- Make an iterator of required modules under some prefix
 ---@param mod_prefix string
 ---@return Iter
-function M.iter_modules(mod_prefix)
-  return vim.iter(M.find_module_names(mod_prefix))
+function M.iter_submodules(mod_prefix)
+  return vim.iter(M.find_submodule_names(mod_prefix))
     :map(require)
 end
 
@@ -105,8 +105,8 @@ end
 function M.setup_submodules(...)
   vim.iter({...})
     :flatten(1)
-    :each(function (mod_prefix)
-      M.iter_modules(mod_prefix)
+    :each(function(mod_prefix)
+      M.iter_submodules(mod_prefix)
         :map(function(m) return m.setup end)
         :each(M.call)
     end)

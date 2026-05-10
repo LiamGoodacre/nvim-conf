@@ -48,7 +48,7 @@ M.setup = function()
   local util = require("LiamGoodacre.util")
 
   local treesitter_registers =
-    util.iter_modules("LiamGoodacre.languages")
+    util.iter_submodules("LiamGoodacre.languages")
       :map(function(m) return m.treesitter_registers end)
       :flatten(1)
       :totable()
