@@ -22,7 +22,7 @@ M.specs =
     { src = "https://github.com/nvim-lualine/lualine.nvim" },
     { src = "https://github.com/nvim-telescope/telescope-symbols.nvim" },
     { src = "https://github.com/nvim-telescope/telescope-ui-select.nvim" },
-    { src = "https://github.com/nvim-telescope/telescope.nvim" },
+    { src = "https://github.com/nvim-telescope/telescope.nvim", version = vim.version.range("*"), },
     { src = "https://github.com/nvim-tree/nvim-tree.lua" },
     { src = "https://github.com/nvim-tree/nvim-web-devicons" },
     { src = "https://github.com/smjonas/live-command.nvim" },
