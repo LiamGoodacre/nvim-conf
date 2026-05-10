@@ -3,7 +3,7 @@ local M = {}
 -- Configures leader & basic vim.opt settings
 M.setup = function()
 
-  -- It's important these are set before lazy is setup.
+  -- It's important these are set before plugins are loaded.
   vim.g.mapleader = " "
   vim.g.maplocalleader = "\\"
 

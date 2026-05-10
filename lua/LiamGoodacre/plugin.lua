@@ -1,33 +1,19 @@
 local M = {}
 
--- Setup Lazy.nvim & load plugins
 M.setup = function()
-  -- Bootstrap lazy.nvim
-  local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-  if not vim.uv.fs_stat(lazypath) then
-    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-    local out = vim.fn.system({
-      "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath
-    })
-    if vim.v.shell_error ~= 0 then
-      vim.api.nvim_echo({
-        { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-        { out, "WarningMsg" },
-        { "\nPress any key to exit..." },
-      }, true, {})
-      vim.fn.getchar()
-      os.exit(1)
-    end
-  end
-  vim.opt.rtp:prepend(lazypath)
+  local pack = require("LiamGoodacre.pack")
 
-  -- Setup lazy.nvim
-  require("lazy").setup({
-    spec = { { import = "LiamGoodacre.plugins" } },
-    pkg = { sources = { "lazy", "packspec" } },
-    rocks = { enabled = false },
-    checker = { enabled = false },
-  })
+  require("LiamGoodacre.plugin_config.copilot").before_load()
+  require("LiamGoodacre.plugin_config.nvim_tree").before_load()
+
+  pack.setup_hooks()
+  pack.add()
+  pack.load()
+  pack.run_hooks()
+
+  require("LiamGoodacre.plugin_config.tmux_navigation").setup()
+  require("LiamGoodacre.plugin_config.nvim_tree").setup()
+  require("LiamGoodacre.plugin_config.telescope").setup()
 end
 
 return M

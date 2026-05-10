@@ -1,9 +1,12 @@
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+local M = {}
 
-return {
-  "nvim-tree/nvim-tree.lua",
-  opts = {
+function M.before_load()
+  vim.g.loaded_netrw = 1
+  vim.g.loaded_netrwPlugin = 1
+end
+
+function M.setup()
+  require("nvim-tree").setup({
     on_attach = require("LiamGoodacre.mappings.nvim-tree").on_nvim_tree_attach,
     filters = {
       enable = true,
@@ -30,5 +33,7 @@ return {
         },
       },
     },
-  },
-}
+  })
+end
+
+return M
