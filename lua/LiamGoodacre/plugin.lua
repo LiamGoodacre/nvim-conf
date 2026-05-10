@@ -7,13 +7,13 @@ M.setup = function()
 
   local util = require("LiamGoodacre.util")
 
-  util.iter_submodules("LiamGoodacre.plugin_config")
+  util.iter_modules("LiamGoodacre.plugin_config...")
     :map(before_load)
     :each(util.call)
 
   require("LiamGoodacre.pack").setup()
 
-  util.iter_submodules("LiamGoodacre.plugin_config")
+  util.iter_modules("LiamGoodacre.plugin_config...")
     :map(after_load)
     :each(util.call)
 

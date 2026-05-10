@@ -4,7 +4,7 @@ M.setup = function()
 
   local util = require("LiamGoodacre.util")
 
-  util.setup_submodules("LiamGoodacre.commands")
+  util.setup_modules("LiamGoodacre.commands...")
 
   local function get_live_commands(command_module)
     return command_module.live_commands or {}
@@ -12,7 +12,7 @@ M.setup = function()
 
   require("live-command").setup({
     commands =
-      util.iter_submodules("LiamGoodacre.commands")
+      util.iter_modules("LiamGoodacre.commands...")
         :map(get_live_commands)
         :fold({
           G = { cmd = "g" },

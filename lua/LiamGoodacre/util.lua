@@ -1,5 +1,21 @@
 local M = {}
 
+--- Call a function with no arguments.
+---@param f function
+function M.call(f)
+  return f()
+end
+
+
+--- Mutate lhs by overwriting entries from rhs.
+---@param lhs table
+---@param rhs table
+---@return table
+function M.table_merge_rtl(lhs, rhs)
+  return vim.tbl_deep_extend("force", lhs or {}, rhs or {})
+end
+
+
 --- Iterator via uv.fs_scandir & uv.fs_scandir_next
 ---@param path string
 ---@return Iter
@@ -52,64 +68,41 @@ function M.resolve_module_file_name(mod_prefix)
 end
 
 
---- Scan for module names directly under some prefix
----@param mod_prefix string
----@return table table array of module names
-function M.find_submodule_names(mod_prefix)
-  return M.iter_dir(M.module_prefix_to_path(mod_prefix))
-    :map(M.resolve_module_file_name(mod_prefix))
+--- Given a "module specifier" return an array of module file paths.
+--- If the specifier ends in "..." then we look up direct submodules.
+--- Otherwise we treat the specifier as a literal module name.
+---@param module_specifier string
+---@return table table array of module file paths
+function M.resolve_modules_to_paths(module_specifier)
+  if module_specifier:sub(-3) ~= "..." then
+    return {module_specifier}
+  end
+
+  local module_prefix = module_specifier:sub(1, -4)
+  return M.iter_dir(M.module_prefix_to_path(module_prefix))
+    :map(M.resolve_module_file_name(module_prefix))
     :totable()
 end
 
 
---- Make an iterator of required modules under some prefix
----@param mod_prefix string
+--- Iterator that requires modules matching a "module specifier".
+---@see |M.resolve_modules_to_paths|
+---@param ... string|string[]
 ---@return Iter
-function M.iter_submodules(mod_prefix)
-  return vim.iter(M.find_submodule_names(mod_prefix))
+function M.iter_modules(...)
+  return vim.iter({...}):flatten(1)
+    :map(M.resolve_modules_to_paths):flatten(1)
     :map(require)
 end
 
 
---- Mutate lhs by overwriting entries from rhs.
----@param lhs table
----@param rhs table
----@return table
-function M.table_merge_rtl(lhs, rhs)
-  return vim.tbl_deep_extend("force", lhs or {}, rhs or {})
-end
-
-
---- Call a function with no arguments.
----@param f function
-function M.call(f)
-  return f()
-end
-
-
---- Require & call .setup() on modules
+--- Require & call .setup() modules matching a "module specifier".
 ---@param ... string|string[]
 ---@return nil
 function M.setup_modules(...)
-  vim.iter({...})
-    :flatten(1)
-    :map(require)
+  M.iter_modules(...)
     :map(function(m) return m.setup end)
     :each(M.call)
-end
-
-
---- Require & call .setup() on each direct module under mod_prefix.
----@param ... string|string[]
----@return nil
-function M.setup_submodules(...)
-  vim.iter({...})
-    :flatten(1)
-    :each(function(mod_prefix)
-      M.iter_submodules(mod_prefix)
-        :map(function(m) return m.setup end)
-        :each(M.call)
-    end)
 end
 
 return M
