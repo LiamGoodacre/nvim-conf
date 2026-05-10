@@ -9,12 +9,13 @@ M.setup = function()
       floats = "dark",
     },
     cache = true,
-    on_highlights = function(hl)
-      hl.CopilotSuggestion = {
-        bg = hl.Keyword.fg,
-        fg = "#000000",
-      }
+    on_highlights = function(_hl)
+      -- hl.CopilotSuggestion = {
+      --   bg = hl.Keyword.fg,
+      --   fg = "#000000",
+      -- }
     end,
+    on_colors = function(_colors) end
   })
 
   vim.cmd.colorscheme("tokyonight-night")
@@ -28,7 +29,7 @@ M.setup = function()
       vim.tbl_deep_extend("force", config or {}, { border = "rounded" }))
   end
 
-  require('lualine').setup()
+  require('lualine').setup({})
 
 end
 
