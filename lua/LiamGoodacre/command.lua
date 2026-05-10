@@ -6,14 +6,15 @@ M.setup = function()
 
   util.setup_modules("LiamGoodacre.commands")
 
+  local function get_live_commands(command_module)
+    return command_module.live_commands or {}
+  end
+
   require("live-command").setup({
     commands =
       util.iter_fold_merge(
-        util.modules("LiamGoodacre.commands"):map(
-          function(command_module)
-            return command_module.live_commands or {}
-          end
-        ),
+        util.iter_modules("LiamGoodacre.commands")
+          :map(get_live_commands),
         {
           G = { cmd = "g" },
           V = { cmd = "v" },

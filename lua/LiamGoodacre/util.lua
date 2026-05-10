@@ -1,70 +1,107 @@
--- Copied and pruned from "lazy.core.util"
-
 local M = {}
 
--- Make a strict iterator producing module names under some prefix
-function M.find_module_names(mod_prefix)
-  local mod_path = vim.fn.stdpath("config") .. "/lua/" .. mod_prefix:gsub("%.", "/")
-  local handle = vim.uv.fs_scandir(mod_path)
-
-  local modules = vim.iter(function()
+--- Iterator via uv.fs_scandir & uv.fs_scandir_next
+---@param path string
+---@return Iter
+function M.iter_dir(path)
+  local handle = vim.uv.fs_scandir(path)
+  return vim.iter(function()
     if handle then
       local basename, possible_filetype = vim.uv.fs_scandir_next(handle)
-
-      if not basename then
-        return
-      end
-
-      local filename = mod_path .. "/" .. basename
-      local filetype = possible_filetype or vim.uv.fs_stat(filename).type
-
-      if basename == "init.lua" then
-        return mod_prefix
-      elseif filetype == "file" or filetype == "link" then
-        if basename:sub(-4) == ".lua" then
-          return mod_prefix .. "." .. basename:sub(1, -5)
-        end
-      elseif filetype == "directory" then
-        if vim.uv.fs_stat(filename .. "/init.lua") then
-          return mod_prefix .. "." .. basename
-        end
-      end
+      if not basename then return end
+      return basename, possible_filetype
     end
   end)
-
-  -- Because non-array iterators don't support flattening/etc
-  return vim.iter(modules:totable())
 end
 
 
--- Make an iterator of required modules under some prefix
-function M.modules(mod_prefix)
-  return M.find_module_names(mod_prefix):map(require)
+--- Build a config path from a module prefix
+---@param mod_prefix string
+---@return string
+function M.module_prefix_to_path(mod_prefix)
+  return vim.fn.stdpath("config") .. "/lua/" .. mod_prefix:gsub("%.", "/")
 end
 
 
--- Merge tables produced by an iterator
+--- Given a module prefix produce a function for converting the defined output
+--- of 'uv.fs_scandir_next' into a module file path which could be 'require'd.
+---@param mod_prefix string
+---@return fun(basename: string, possible_filetype: nil|string): nil|string
+function M.resolve_module_file_name(mod_prefix)
+  local mod_path = M.module_prefix_to_path(mod_prefix)
+
+  ---@param basename string
+  ---@param possible_filetype nil|string
+  ---@return nil|string
+  return function(basename, possible_filetype)
+    local filename = mod_path .. "/" .. basename
+    local filetype = possible_filetype or vim.uv.fs_stat(filename).type
+
+    if basename == "init.lua" then
+      return mod_prefix
+    elseif filetype == "file" or filetype == "link" then
+      if basename:sub(-4) == ".lua" then
+        return mod_prefix .. "." .. basename:sub(1, -5)
+      end
+    elseif filetype == "directory" then
+      if vim.uv.fs_stat(filename .. "/init.lua") then
+        return mod_prefix .. "." .. basename
+      end
+    end
+  end
+end
+
+
+--- Scan for module names directly under some prefix
+---@param mod_prefix string
+---@return table table array of module names
+function M.find_module_names(mod_prefix)
+  return M.iter_dir(M.module_prefix_to_path(mod_prefix))
+    :map(M.resolve_module_file_name(mod_prefix))
+    :totable()
+end
+
+
+--- Make an iterator of required modules under some prefix
+---@param mod_prefix string
+---@return Iter
+function M.iter_modules(mod_prefix)
+  return vim.iter(M.find_module_names(mod_prefix))
+    :map(require)
+end
+
+
+--- Merge tables produced by an iterator
+---@param iter Iter
+---@param start nil|table
+---@return table
 function M.iter_fold_merge(iter, start)
-  local results = start or {}
-
-  iter:each(function(item)
-    results = vim.tbl_deep_extend("force", results, item or {})
+  ---@type table
+  local start_table = start or {}
+  return iter:fold(start_table, function(acc, item)
+    return vim.tbl_deep_extend("force", acc, item or {})
   end)
-
-  return results
 end
 
 
--- Call setup on a module if it exists
+---@class SetupModule
+---@field setup nil|fun()
+
+--- Call .setup() on a module if it exists
+---@param module SetupModule
+---@return nil
 function M.call_setup(module)
   if module.setup then
     module.setup()
   end
 end
 
--- Require & call .setup() on each direct module under mod_prefix.
+
+--- Require & call .setup() on each direct module under mod_prefix.
+---@param mod_prefix string
+---@return nil
 function M.setup_modules(mod_prefix)
-  M.modules(mod_prefix):each(M.call_setup)
+  M.iter_modules(mod_prefix):each(M.call_setup)
 end
 
 return M

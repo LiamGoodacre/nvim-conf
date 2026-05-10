@@ -48,7 +48,7 @@ M.setup = function()
   local util = require("LiamGoodacre.util")
 
   local treesitter_registers =
-    util.modules("LiamGoodacre.languages"):map(
+    util.iter_modules("LiamGoodacre.languages"):map(
       function(language_module)
         return language_module.treesitter_registers or {}
       end

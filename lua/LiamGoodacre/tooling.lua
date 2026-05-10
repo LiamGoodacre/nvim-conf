@@ -9,7 +9,7 @@ M.setup = function()
 
   require("mason-lspconfig").setup({
     ensure_installed =
-      util.modules("LiamGoodacre.languages"):map(
+      util.iter_modules("LiamGoodacre.languages"):map(
         function(language_module)
           return language_module.lsps or {}
         end
@@ -20,7 +20,7 @@ M.setup = function()
     ensure_installed =
       vim.list_extend(
         { "tree-sitter-cli" },
-        util.modules("LiamGoodacre.languages"):map(
+        util.iter_modules("LiamGoodacre.languages"):map(
           function(language_module)
             return language_module.tools or {}
           end
