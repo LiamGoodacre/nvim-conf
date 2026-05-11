@@ -3,6 +3,7 @@ local M = {}
 local function before_load(s) return s.before_load end
 local function after_load(s) return s.after_load end
 
+--- Run plugin hooks around plugin installation and loading.
 M.setup = function()
 
   local util = require("LiamGoodacre.util")

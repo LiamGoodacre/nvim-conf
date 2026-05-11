@@ -1,5 +1,6 @@
 local M = {}
 
+--- Register local commands and live-command previews.
 M.setup = function()
 
   local util = require("LiamGoodacre.util")

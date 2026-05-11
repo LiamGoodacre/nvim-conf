@@ -9,6 +9,7 @@ local nvim_conf_git_log = function()
   return vim.fn.split(text, "\n", true)
 end
 
+--- Configure the startup dashboard.
 M.setup = function()
   local alpha = require("alpha")
   local alpha_dashboard = require("alpha.themes.dashboard")

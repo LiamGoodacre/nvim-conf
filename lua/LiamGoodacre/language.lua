@@ -44,6 +44,7 @@ local treesitter_parsers = {
   "zig",
 }
 
+--- Register language integrations and start Treesitter by filetype.
 M.setup = function()
 
   local util = require("LiamGoodacre.util")

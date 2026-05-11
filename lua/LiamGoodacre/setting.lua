@@ -1,6 +1,6 @@
 local M = {}
 
--- Configures leader & basic vim.opt settings
+--- Configure leaders and baseline editor options.
 M.setup = function()
 
   -- It's important these are set before plugins are loaded.

@@ -1,6 +1,6 @@
 local M = {}
 
--- Mason, lsps, other tools
+--- Configure Mason-managed LSPs and tools.
 M.setup = function()
 
   require("mason").setup()
