@@ -6,7 +6,11 @@ return {
     { parser = "c_sharp", filetype = filetype },
   },
   setup = function()
-    local exe = vim.fn.exepath("OmniSharp") or vim.fn.exepath("omnisharp")
+    local exe =
+      vim.iter({ "OmniSharp", "omnisharp" })
+        :map(vim.fn.exepath)
+        :find(function(e) return e ~= "" end)
+
     if exe then
       vim.lsp.config("omnisharp", {
         filetypes = { filetype },
