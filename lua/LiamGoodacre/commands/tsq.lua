@@ -59,7 +59,7 @@ M.TSQ_command_preview = function(exec)
 
       if exec then
         vim.api.nvim_win_set_cursor(0, {row, col})
-        if not pcall(vim.cmd(command)) then
+        if not pcall(vim.cmd, command) then
           local cursor_row, cursor_col = unpack(vim.api.nvim_win_get_cursor(0))
           cursorat(cursor_row, cursor_col)
         else
