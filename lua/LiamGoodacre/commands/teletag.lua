@@ -9,14 +9,12 @@ M.teletag = function(opts)
     return
   end
 
-  local entries = {}
-  for _, tag in ipairs(matches) do
+  local function format(tag)
     -- format as "tags\tfile\tlnum"
-    local line = string.format(
+    return string.format(
       "%s\t%s\t%s",
       tag.name, tag.filename, tag.cmd
     )
-    table.insert(entries, line)
   end
 
   opts = opts or {}
@@ -35,7 +33,7 @@ M.teletag = function(opts)
 
   require("telescope.builtin").tags(vim.tbl_extend("force", {
     finder = require("telescope.finders").new_table {
-      results = entries,
+      results = vim.iter(matches):map(format):totable(),
       entry_maker = function(entry)
         return vim.tbl_extend("force", gen_from_ctags(entry), {
           display = make_display,
