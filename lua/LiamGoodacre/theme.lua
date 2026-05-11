@@ -9,11 +9,11 @@ M.setup = function()
       floats = "dark",
     },
     cache = true,
-    on_highlights = function(_hl)
-      -- hl.CopilotSuggestion = {
-      --   bg = hl.Keyword.fg,
-      --   fg = "#000000",
-      -- }
+    on_highlights = function(hl, colors)
+      hl.CopilotSuggestion = {
+        bg = colors.green,
+        fg = colors.bg_dark1,
+      }
     end,
     on_colors = function(_colors) end
   })
