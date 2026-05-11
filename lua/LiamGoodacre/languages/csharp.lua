@@ -13,10 +13,10 @@ return {
         cmd = {
           exe,
           "-z",
-          '--hostPID', tostring(vim.fn.getpid()),
-          'DotNet:enablePackageRestore=false',
-          '--encoding', 'utf-8',
-          '--languageserver',
+          "--hostPID", tostring(vim.fn.getpid()),
+          "DotNet:enablePackageRestore=false",
+          "--encoding", "utf-8",
+          "--languageserver",
         }
       })
     end

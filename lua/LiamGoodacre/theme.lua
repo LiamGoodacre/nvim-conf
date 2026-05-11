@@ -31,7 +31,7 @@ M.setup = function()
       vim.tbl_deep_extend("force", config or {}, { border = "rounded" }))
   end
 
-  require('lualine').setup({})
+  require("lualine").setup({})
 
 end
 

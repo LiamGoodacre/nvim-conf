@@ -110,8 +110,8 @@ return {
         filetypes = { haskell, "haskell", "lhaskell", "cabal" },
         settings = {
           [haskell] = {
-            formattingProvider = 'ormolu',
-            cabalFormattingProvider = 'cabalfmt',
+            formattingProvider = "ormolu",
+            cabalFormattingProvider = "cabalfmt",
           },
         },
       })
