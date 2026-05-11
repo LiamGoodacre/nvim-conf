@@ -37,14 +37,14 @@ M.specs =
 --- Install declared packages and add them to the runtime.
 function M.setup()
 
-  vim.pack.add(M.specs, {
-    load = false,
-    confirm = false,
-  })
+  -- We do this in 2 steps which makes it more lenient around
+  -- plugin interdepedencies & load order.
 
-  vim.iter(M.specs):each(function(s)
-    vim.cmd.packadd(s.name)
-  end)
+  -- step 1: tell pack what plugins exist
+  vim.pack.add(M.specs, { load = false, confirm = false })
+
+  -- step 2: actually load the plugins
+  vim.pack.add(M.specs, { load = true, confirm = false })
 
 end
 
