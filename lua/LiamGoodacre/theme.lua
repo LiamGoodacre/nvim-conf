@@ -13,6 +13,8 @@ M.setup = function()
       hl.CopilotSuggestion = {
         bg = colors.green,
         fg = colors.bg_dark1,
+        italic = true,
+        bold = true,
       }
     end,
     on_colors = function(_colors) end
