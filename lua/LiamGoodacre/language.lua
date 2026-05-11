@@ -14,6 +14,7 @@ local treesitter_parsers = {
   "gitcommit",
   "gitignore",
   "haskell",
+  "hcl",
   "html",
   "javascript",
   "jq",
