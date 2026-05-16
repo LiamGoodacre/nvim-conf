@@ -12,13 +12,14 @@ end
 M.specs =
   vim.iter({
     { src = "https://github.com/alexghergh/nvim-tmux-navigation" },
-    { src = "https://github.com/goolord/alpha-nvim" },
+    { src = "https://github.com/folke/tokyonight.nvim" },
     { src = "https://github.com/github/copilot.vim" },
+    { src = "https://github.com/goolord/alpha-nvim" },
     { src = "https://github.com/mason-org/mason-lspconfig.nvim" },
     { src = "https://github.com/mason-org/mason.nvim" },
-    { src = "https://github.com/neovim/nvim-lspconfig" },
     { src = "https://github.com/neovim-treesitter/nvim-treesitter" },
     { src = "https://github.com/neovim-treesitter/treesitter-parser-registry" },
+    { src = "https://github.com/neovim/nvim-lspconfig" },
     { src = "https://github.com/nvim-lua/plenary.nvim" },
     { src = "https://github.com/nvim-lualine/lualine.nvim" },
     { src = "https://github.com/nvim-telescope/telescope-symbols.nvim" },
@@ -27,7 +28,6 @@ M.specs =
     { src = "https://github.com/nvim-tree/nvim-tree.lua" },
     { src = "https://github.com/nvim-tree/nvim-web-devicons" },
     { src = "https://github.com/smjonas/live-command.nvim" },
-    { src = "https://github.com/folke/tokyonight.nvim" },
     { src = "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim" },
   })
   :map(nominalise)
