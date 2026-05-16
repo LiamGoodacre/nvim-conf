@@ -37,6 +37,8 @@ M.specs =
 --- Install declared packages and add them to the runtime.
 function M.setup()
 
+  vim.cmd.packadd("nvim.undotree")
+
   -- We do this in 2 steps which makes it more lenient around
   -- plugin interdepedencies & load order.
 
