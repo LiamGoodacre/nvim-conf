@@ -359,7 +359,6 @@ end
 
 
 function M._demo()
-  ---Given a character produce a grid of 5x5 of that char
   local function content(char)
     local line = string.rep(char, 5)
     return vim.tbl_map(function() return line end, vim.fn.range(1, 5))
