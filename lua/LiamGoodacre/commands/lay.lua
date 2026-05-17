@@ -21,6 +21,80 @@ local function mkLayoutGroup(layout)
 end
 
 
+---Parses the output of `vim.fn.winlayout()` into a LayoutSpec, using the
+---provided windows array to map window IDs to their corresponding indices.
+---@param windows number[]
+---@return fun(expr: vim.fn.winlayout.ret): nil|LayoutSpec
+function M._parse_winlayout(windows)
+  local windowTable =
+    vim.iter(windows)
+      :enumerate()
+      :fold({}, function(acc, ix, windowId)
+        acc[windowId] = ix
+        return acc
+      end)
+
+  local function recur(expr)
+    local tag, val = unpack(expr)
+    if tag == "leaf" then
+      return windowTable[val]
+    end
+    if tag == "row" then
+      return mkLayoutGroup("right")(
+        vim.iter(val):map(recur):totable()
+      )
+    end
+    if tag == "col" then
+      return mkLayoutGroup("below")(
+        vim.iter(val):map(recur):totable()
+      )
+    end
+  end
+
+  return recur
+end
+
+
+---Renders a LayoutSpec back into a string that the user can edit.
+---This is not guaranteed to produce the same string that was originally input by
+---the user, but it should produce a string that evaluates to an equivalent LayoutSpec.
+---@param expr LayoutSpec? The layout specification to render.
+---@return string?
+function M._render_spec(expr)
+  local function recur(current_expr)
+    if current_expr == nil then return "" end
+
+    if type(current_expr) == "number" then
+      return tostring(current_expr)
+    end
+
+    if type(current_expr) == "table" then
+      local parts =
+        vim.iter(current_expr.elems)
+          :map(recur)
+          :totable()
+
+      if #parts == 0 then return end
+
+      local op = ({
+        above = "u",
+        below = "v",
+        left = "l",
+        right = "h",
+      })[current_expr.layout]
+
+      return string.format(
+        "%s{%s}",
+        op,
+        vim.iter(parts):join(",")
+      )
+    end
+  end
+
+  return recur(expr)
+end
+
+
 ---The environment in which layout specifications are evaluated.
 ---@type table<string, LayoutCtor>
 local eval_env = {
@@ -66,6 +140,17 @@ function M._gather_windows()
 end
 
 
+---@class LabelInfo
+---@field labelBufferId number
+---@field labelWindowId number
+
+
+---Creates a label window for the given window ID, displaying the given index.
+---The label is a small floating window positioned near the center of the target
+---window.
+---@param index number The index to display in the label.
+---@param windowId number The ID of the window to label.
+---@return LabelInfo?
 function M._make_label_window(index, windowId)
   if not vim.api.nvim_win_is_valid(windowId) then
     return
@@ -96,6 +181,8 @@ function M._make_label_window(index, windowId)
 end
 
 
+---Destroys the given label window, closing it and deleting its buffer.
+---@param label LabelInfo
 function M._destroy_label_window(label)
   vim.api.nvim_win_close(label.labelWindowId, true)
   vim.api.nvim_buf_delete(label.labelBufferId, { force = true })
@@ -175,9 +262,13 @@ end
 ---Prompts the user to enter a layout specification, evaluates it, and passes the resulting
 ---spec to the given continuation function. The user can cancel the prompt or enter an invalid
 ---spec, in which case the continuation will be called with nil.
+---@param existingLayout LayoutSpec?
 ---@param cont fun(spec: LayoutSpec?)
-function M._prompt_for_spec(cont)
-  vim.ui.input({ prompt = "Enter layout: " }, function(code)
+function M._prompt_for_spec(existingLayout, cont)
+  vim.ui.input({
+    prompt = "Enter layout: ",
+    default = M._render_spec(existingLayout),
+  }, function(code)
     if code == nil then return cont(nil) end
 
     if code == "" then return cont(nil) end
@@ -198,7 +289,7 @@ function M._prompt_for_spec(cont)
 end
 
 
----Applies the given layout plan to the given windows.
+---Applies a given layout plan to the given windows.
 ---@param windows number[] The windows to apply the layout to.
 ---@param plan LayoutPlan The layout plan to apply.
 function M._apply_layout_plan(windows, plan)
@@ -254,8 +345,11 @@ function M.Lay_command()
     return
   end
 
+  local existingLayout =
+    M._parse_winlayout(windows)(vim.fn.winlayout())
+
   M._label_windows(windows, function(clean_up_labels)
-    M._prompt_for_spec(function(spec)
+    M._prompt_for_spec(existingLayout, function(spec)
       clean_up_labels()
       if spec == nil then return end
       M._apply_layout_spec(windows, spec)
@@ -264,7 +358,38 @@ function M.Lay_command()
 end
 
 
+function M._demo()
+  ---Given a character produce a grid of 5x5 of that char
+  local function content(char)
+    local line = string.rep(char, 5)
+    return vim.tbl_map(function() return line end, vim.fn.range(1, 5))
+  end
+
+  local chars = {"A", "B", "C", "D", "E"}
+
+  if vim.api.nvim_buf_line_count(0) == 1 and vim.api.nvim_buf_get_lines(0, 0, -1, false)[1] == "" then
+    vim.api.nvim_buf_set_lines(0, 0, -1, false, content("F"))
+  end
+
+  vim.iter(chars)
+    :each(function(char)
+      local buf = vim.api.nvim_create_buf(false, true)
+      vim.api.nvim_buf_set_lines(buf, 0, -1, false, content(char))
+      vim.api.nvim_open_win(buf, false, {
+        focusable = true,
+        split = "left",
+      })
+    end)
+
+  M.Lay_command()
+end
+
+
 M.setup = function()
+
+  vim.api.nvim_create_user_command("LayDemo", M._demo, {
+    desc = "Demo of :Lay"
+  })
 
   vim.api.nvim_create_user_command("Lay", M.Lay_command, {
     desc = "Temporarily labels windows with integer indices.\
@@ -272,7 +397,7 @@ Prompts for a layout specification involving these indices.\
 Applies this specification to the labelled windows.\
 \
 A specification is a nested structure of window indices.\
-They are described via inputting a minimal lua expression involving the following functions:\
+They are described by inputting a minimal lua expression involving the following functions:\
 - `h{...}`: Arrange windows horizontally (left to right)\
 - `v{...}`: Arrange windows vertically (top to bottom)\
 - `u{...}`: Arrange windows vertically (bottom to top)\
@@ -284,7 +409,9 @@ Each constructor accepts an array of either:\
 - A window index (a number corresponding to the labels shown on the windows)\
 - Another nested layout specification (allowing for complex arrangements)\
 \
-For example, the specification `h{1, v{2, 3}}` would arrange window 1 on the left, and windows 2 and 3 stacked vertically on the right half."
+For example, the specification `h{1, v{2, 3}}` would arrange window 1 on the left, and windows 2 and 3 stacked vertically on the right half.\
+\
+The initial prompt will show an expression describing the current window layout."
   })
 
 end
