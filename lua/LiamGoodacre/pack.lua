@@ -11,6 +11,7 @@ end
 ---@type vim.pack.Spec[]
 M.specs =
   vim.iter({
+    { src = "https://github.com/LiamGoodacre/lay.nvim" },
     { src = "https://github.com/alexghergh/nvim-tmux-navigation" },
     { src = "https://github.com/folke/tokyonight.nvim" },
     { src = "https://github.com/github/copilot.vim" },

@@ -8,6 +8,10 @@
       "rev": "a12fd5672110c8aa7e3c8419e28c96943ca179be",
       "src": "https://github.com/github/copilot.vim"
     },
+    "lay.nvim": {
+      "rev": "2158b2a611e1755bc9ba9aaf7f66b5d3428c91bd",
+      "src": "https://github.com/LiamGoodacre/lay.nvim"
+    },
     "live-command.nvim": {
       "rev": "fc8c36d7e5b96945fbc52af7029facc317a47377",
       "src": "https://github.com/smjonas/live-command.nvim"
