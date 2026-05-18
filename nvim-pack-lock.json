@@ -9,7 +9,7 @@
       "src": "https://github.com/github/copilot.vim"
     },
     "lay.nvim": {
-      "rev": "2158b2a611e1755bc9ba9aaf7f66b5d3428c91bd",
+      "rev": "6dade0951ba0111de6e36e240f9db2358d404d75",
       "src": "https://github.com/LiamGoodacre/lay.nvim"
     },
     "live-command.nvim": {
@@ -33,7 +33,7 @@
       "src": "https://github.com/mason-org/mason.nvim"
     },
     "nvim-lspconfig": {
-      "rev": "3de240997fc3208eb29df5e5c17ba4665961bd84",
+      "rev": "246572944c2a1e2a646c2e7609ff619b0fe74c18",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-tmux-navigation": {
