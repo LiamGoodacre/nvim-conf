@@ -10,7 +10,8 @@
     },
     "lay.nvim": {
       "rev": "6dade0951ba0111de6e36e240f9db2358d404d75",
-      "src": "https://github.com/LiamGoodacre/lay.nvim"
+      "src": "https://github.com/LiamGoodacre/lay.nvim",
+      "version": "'1'"
     },
     "live-command.nvim": {
       "rev": "fc8c36d7e5b96945fbc52af7029facc317a47377",
