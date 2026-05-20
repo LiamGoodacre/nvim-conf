@@ -25,7 +25,10 @@ function M.iter_dir(path)
     if handle then
       local basename, possible_filetype = vim.uv.fs_scandir_next(handle)
       if not basename then return end
-      return basename, possible_filetype
+      local filetype =
+        possible_filetype or
+        vim.uv.fs_stat(path .. "/" .. basename).type
+      return basename, filetype
     end
   end)
 end
@@ -42,16 +45,15 @@ end
 --- Given a module prefix produce a function for converting the defined output
 --- of 'uv.fs_scandir_next' into a module file path which could be 'require'd.
 ---@param mod_prefix string
----@return fun(basename: string, possible_filetype: nil|string): nil|string
+---@return fun(basename: string, filetype: nil|string): nil|string
 function M.resolve_module_file_name(mod_prefix)
   local mod_path = M.module_prefix_to_path(mod_prefix)
 
   ---@param basename string
-  ---@param possible_filetype nil|string
+  ---@param filetype nil|string
   ---@return nil|string
-  return function(basename, possible_filetype)
+  return function(basename, filetype)
     local filename = mod_path .. "/" .. basename
-    local filetype = possible_filetype or vim.uv.fs_stat(filename).type
 
     if basename == "init.lua" then
       return mod_prefix
