@@ -9,8 +9,7 @@ return {
     if not exe then return end
 
     vim.lsp.config("gopls", {
-      -- Run gopls with Go modules disabled.
-      cmd = { "env", "GO111MODULE=off", exe, "-remote=auto" },
+      cmd = { exe, "-remote=auto" },
 
       settings = {
         gopls = {
@@ -33,7 +32,7 @@ return {
       -- stops us from trying to ingest too much code.
       root_dir = function(buffnr, on_dir)
         local fname = vim.api.nvim_buf_get_name(buffnr)
-        local root_markers = {"README.md", "main.go", "go.mod", "LICENSE", ".git"}
+        local root_markers = {"go.work", "go.mod", ".git", "README.md", "LICENSE", "main.go"}
         local matches = vim.fs.find(root_markers, {
           path = fname,
           upward = true,
