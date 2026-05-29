@@ -37,6 +37,11 @@ M.setup = function()
   vim.opt.wildmode:append("longest")
   vim.opt.wrap = false
 
+  vim.diagnostic.config({
+    virtual_text = true,
+    -- virtual_lines = true,
+  })
+
 end
 
 return M
