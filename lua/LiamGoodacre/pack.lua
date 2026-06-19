@@ -30,6 +30,7 @@ M.specs =
     { src = "https://github.com/nvim-tree/nvim-web-devicons" },
     { src = "https://github.com/smjonas/live-command.nvim" },
     { src = "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim" },
+    { src = 'https://github.com/nvim-mini/mini.files', version = 'stable' },
   })
   :map(nominalise)
   :totable()
