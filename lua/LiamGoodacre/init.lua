@@ -5,11 +5,11 @@ M.setup = function()
   require("vim._core.ui2").enable({})
 
   require("LiamGoodacre.util").setup_modules({
-    "LiamGoodacre.setting",
-    "LiamGoodacre.component",
-    "LiamGoodacre.command",
+    "LiamGoodacre.settings",
+    "LiamGoodacre.components",
+    "LiamGoodacre.commands",
     "LiamGoodacre.mappings...",
-    "LiamGoodacre.language",
+    "LiamGoodacre.languages",
   })
 
 end

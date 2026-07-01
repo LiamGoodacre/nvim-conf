@@ -50,7 +50,7 @@ M.setup = function()
   local util = require("LiamGoodacre.util")
 
   local treesitter_registers =
-    util.iter_modules("LiamGoodacre.languages...")
+    util.iter_modules("LiamGoodacre.language...")
       :map(function(m) return m.treesitter_registers end)
       :flatten(1)
       :totable()
@@ -59,7 +59,7 @@ M.setup = function()
     vim.treesitter.language.register(register.parser, register.filetype)
   end)
 
-  util.setup_modules("LiamGoodacre.languages...")
+  util.setup_modules("LiamGoodacre.language...")
 
   require("nvim-treesitter").install(treesitter_parsers)
 

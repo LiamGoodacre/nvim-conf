@@ -16,13 +16,13 @@ M.setup = function()
 
   local util = require("LiamGoodacre.util")
 
-  util.iter_modules("LiamGoodacre.components...")
+  util.iter_modules("LiamGoodacre.component...")
     :map(M.before_load)
     :each(util.call)
 
   ---@type vim.pack.Spec[]
   local plugins =
-    util.iter_modules("LiamGoodacre.components...")
+    util.iter_modules("LiamGoodacre.component...")
       :map(M.plugins)
       :flatten(1)
       :map(M.nominalise)
@@ -37,7 +37,7 @@ M.setup = function()
   -- step 2: actually load the plugins
   vim.pack.add(plugins, { load = true, confirm = false })
 
-  util.iter_modules("LiamGoodacre.components...")
+  util.iter_modules("LiamGoodacre.component...")
     :map(M.after_load)
     :each(util.call)
 

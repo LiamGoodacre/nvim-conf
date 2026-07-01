@@ -23,7 +23,7 @@ M.setup = function()
   vim.keymap.set("n", "<leader>gg", telescope.git_files, {})
   vim.keymap.set("n", "<leader>gh", function() telescope.git_files({ cwd = vim.fn.expand("%:p:h"), use_git_root = false }) end, {})
   vim.keymap.set("n", "<leader>rg", telescope.live_grep, {})
-  vim.keymap.set("n", "<leader>g]", require("LiamGoodacre.commands.teletag").teletag, { desc = "Telescope jump to exact tag matches" })
+  vim.keymap.set("n", "<leader>g]", require("LiamGoodacre.command.teletag").teletag, { desc = "Telescope jump to exact tag matches" })
 
   -- Uncommon
   vim.keymap.set("n", "<leader>hk", telescope.keymaps, {})
