@@ -7,7 +7,6 @@ M.setup = function()
   require("LiamGoodacre.util").setup_modules({
     "LiamGoodacre.setting",
     "LiamGoodacre.plugin",
-    "LiamGoodacre.tooling",
     "LiamGoodacre.command",
     "LiamGoodacre.mappings...",
     "LiamGoodacre.language",
