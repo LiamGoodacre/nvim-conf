@@ -7,12 +7,12 @@ local sessions_dir =
   vim.fn.fnameescape(vim.fn.stdpath("config") .. "/.sessions/")
 
 
-function M._session_file(fname)
+M._session_file = function(fname)
   return sessions_dir .. vim.fn.fnameescape(fname)
 end
 
 
-function M._iter_sessions()
+M._iter_sessions = function()
   return util.iter_dir(sessions_dir)
     :map(function(basename, filetype)
       if filetype == "file" then return basename end
@@ -20,7 +20,7 @@ function M._iter_sessions()
 end
 
 
-function M.record_session()
+M.record_session = function()
   vim.ui.input({
     prompt = "Record session: ",
   }, function(fname)
@@ -38,7 +38,7 @@ function M.record_session()
 end
 
 
-function M.switch_session()
+M.switch_session = function()
   vim.ui.select(M._iter_sessions():totable(), {
     prompt = "Switch session:",
     format_item = function(item)
@@ -58,7 +58,7 @@ function M.switch_session()
 end
 
 
-function M.delete_session()
+M.delete_session = function()
   vim.ui.select(M._iter_sessions():totable(), {
     prompt = "Delete session:",
   }, function(choice)
@@ -73,7 +73,7 @@ function M.delete_session()
 end
 
 
-function M.setup()
+M.setup = function()
 
   vim.api.nvim_create_user_command(
     "RecordSession",

@@ -1,15 +1,15 @@
 local M = {}
 
 --- Copied from normalize_spec in vim.pack
-function M.nominalise(spec)
+M.nominalise = function(spec)
   local name = spec.name or spec.src:gsub("%.git$", "")
   spec.name = (type(name) == "string" and name or ""):match("[^/]+$") or ""
   return spec
 end
 
-function M.before_load(s) return s.before_load end
-function M.after_load(s) return s.after_load end
-function M.plugins(m) return m.plugins end
+M.before_load = function(s) return s.before_load end
+M.after_load = function(s) return s.after_load end
+M.plugins = function(m) return m.plugins end
 
 --- Run plugin hooks around plugin installation and loading.
 M.setup = function()

@@ -1,6 +1,6 @@
 local M = {}
 
-function M.setup()
+M.setup = function()
 
   local MiniFiles = require("mini.files")
   vim.keymap.set("n", "<leader>mm", MiniFiles.open)

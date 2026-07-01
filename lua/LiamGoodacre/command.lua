@@ -7,7 +7,7 @@ M.setup = function()
 
   util.setup_modules("LiamGoodacre.commands...")
 
-  local function get_live_commands(command_module)
+  local get_live_commands = function(command_module)
     return command_module.live_commands or {}
   end
 

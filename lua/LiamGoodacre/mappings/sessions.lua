@@ -1,6 +1,6 @@
 local M = {}
 
-function M.setup()
+M.setup = function()
   local sessions = require("LiamGoodacre.commands.sessions")
   vim.keymap.set("n", "<leader>sw", sessions.record_session, { desc = "Record session" })
   vim.keymap.set("n", "<leader>se", sessions.switch_session, { desc = "Switch session" })

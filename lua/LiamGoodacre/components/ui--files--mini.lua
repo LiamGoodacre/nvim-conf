@@ -5,7 +5,7 @@ M.plugins = {
 }
 
 
-function M.after_load()
+M.after_load = function()
   require('mini.files').setup({
     -- Customization of shown content
     content = {

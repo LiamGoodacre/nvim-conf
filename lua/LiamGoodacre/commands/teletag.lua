@@ -9,7 +9,7 @@ M.teletag = function(opts)
     return
   end
 
-  local function format(tag)
+  local format = function(tag)
     -- format as "tags\tfile\tlnum"
     return string.format(
       "%s\t%s\t%s",

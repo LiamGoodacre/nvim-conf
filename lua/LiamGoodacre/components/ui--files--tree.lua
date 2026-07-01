@@ -1,6 +1,6 @@
 local M = {}
 
-function M.before_load()
+M.before_load = function()
   vim.g.loaded_netrw = 1
   vim.g.loaded_netrwPlugin = 1
 end
@@ -12,7 +12,7 @@ M.plugins = {
 }
 
 
-function M.after_load()
+M.after_load = function()
   require("nvim-tree").setup({
     on_attach = require("LiamGoodacre.mappings.nvim-tree").on_nvim_tree_attach,
     filters = {

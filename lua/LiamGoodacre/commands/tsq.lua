@@ -44,7 +44,7 @@ end
 
 M.TSQ_command_preview = function(exec)
   return function (opts, preview_ns)
-    local function cursorat(row, col)
+    local cursorat = function(row, col)
       vim.hl.range(0, preview_ns, "Underlined",
         { row - 1, col },
         { row - 1, col + 1 })

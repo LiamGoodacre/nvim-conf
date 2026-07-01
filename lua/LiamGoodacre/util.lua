@@ -2,7 +2,7 @@ local M = {}
 
 --- Call a function with no arguments.
 ---@param f function
-function M.call(f)
+M.call = function(f)
   return f()
 end
 
@@ -11,7 +11,7 @@ end
 ---@param lhs table
 ---@param rhs table
 ---@return table
-function M.table_merge_rtl(lhs, rhs)
+M.table_merge_rtl = function(lhs, rhs)
   return vim.tbl_deep_extend("force", lhs or {}, rhs or {})
 end
 
@@ -19,7 +19,7 @@ end
 --- Iterator via uv.fs_scandir & uv.fs_scandir_next
 ---@param path string
 ---@return Iter
-function M.iter_dir(path)
+M.iter_dir = function(path)
   local handle = vim.uv.fs_scandir(path)
   return vim.iter(function()
     if handle then
@@ -37,7 +37,7 @@ end
 --- Build a config path from a module prefix
 ---@param mod_prefix string
 ---@return string
-function M.module_prefix_to_path(mod_prefix)
+M.module_prefix_to_path = function(mod_prefix)
   return vim.fn.stdpath("config") .. "/lua/" .. mod_prefix:gsub("%.", "/")
 end
 
@@ -46,7 +46,7 @@ end
 --- of 'uv.fs_scandir_next' into a module file path which could be 'require'd.
 ---@param mod_prefix string
 ---@return fun(basename: string, filetype: nil|string): nil|string
-function M.resolve_module_file_name(mod_prefix)
+M.resolve_module_file_name = function(mod_prefix)
   local mod_path = M.module_prefix_to_path(mod_prefix)
 
   ---@param basename string
@@ -75,7 +75,7 @@ end
 --- Otherwise we treat the specifier as a literal module name.
 ---@param module_specifier string
 ---@return table table array of module file paths
-function M.resolve_modules_to_paths(module_specifier)
+M.resolve_modules_to_paths = function(module_specifier)
   if module_specifier:sub(-3) ~= "..." then
     return {module_specifier}
   end
@@ -91,7 +91,7 @@ end
 ---@see |M.resolve_modules_to_paths|
 ---@param ... string|string[]
 ---@return Iter
-function M.iter_modules(...)
+M.iter_modules = function(...)
   return vim.iter({...}):flatten(1)
     :map(M.resolve_modules_to_paths):flatten(1)
     :map(require)
@@ -101,7 +101,7 @@ end
 --- Require & call .setup() modules matching a "module specifier".
 ---@param ... string|string[]
 ---@return nil
-function M.setup_modules(...)
+M.setup_modules = function(...)
   M.iter_modules(...)
     :map(function(m) return m.setup end)
     :each(M.call)
