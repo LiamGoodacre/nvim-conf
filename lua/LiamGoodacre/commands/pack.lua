@@ -7,6 +7,11 @@ M.setup = function()
   end, { desc = "Update packages" })
 
 
+  vim.api.nvim_create_user_command("PackUpgrade", function()
+    vim.pack.update(nil, {force = true})
+  end, { desc = "Upgrade packages" })
+
+
   vim.api.nvim_create_user_command("PackListActive", function()
     local actives =
       vim.iter(vim.pack.get())
