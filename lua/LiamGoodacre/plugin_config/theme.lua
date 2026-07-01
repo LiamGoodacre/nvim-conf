@@ -1,7 +1,12 @@
 local M = {}
 
+M.specs = {
+  { src = "https://github.com/folke/tokyonight.nvim" },
+  { src = "https://github.com/nvim-lualine/lualine.nvim" },
+}
+
 -- Apply theme & other visual settings
-M.setup = function()
+M.after_load = function()
 
   require("tokyonight").setup({
     styles = {

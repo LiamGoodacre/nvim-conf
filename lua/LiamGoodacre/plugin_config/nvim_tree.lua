@@ -6,6 +6,12 @@ function M.before_load()
 end
 
 
+M.specs = {
+  { src = "https://github.com/nvim-tree/nvim-tree.lua" },
+  { src = "https://github.com/nvim-tree/nvim-web-devicons" },
+}
+
+
 function M.after_load()
   require("nvim-tree").setup({
     on_attach = require("LiamGoodacre.mappings.nvim-tree").on_nvim_tree_attach,

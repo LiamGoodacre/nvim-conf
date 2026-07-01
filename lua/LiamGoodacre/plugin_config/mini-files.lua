@@ -1,5 +1,10 @@
 local M = {}
 
+M.specs = {
+  { src = 'https://github.com/nvim-mini/mini.files', version = 'stable' },
+}
+
+
 function M.after_load()
   require('mini.files').setup({
     -- Customization of shown content

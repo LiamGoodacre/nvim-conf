@@ -6,4 +6,9 @@ function M.before_load()
   vim.g.copilot_no_maps = true
 end
 
+
+M.specs = {
+  { src = "https://github.com/github/copilot.vim" },
+}
+
 return M
