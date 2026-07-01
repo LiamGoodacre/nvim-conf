@@ -1,5 +1,10 @@
 local M = {}
 
+M.plugins = {
+  { src = "https://github.com/goolord/alpha-nvim" },
+}
+
+
 local nvim_conf_git_log = function()
   local text = vim.system(
     { "git", "log", "--oneline", "-5", "--format=[%h] %s" },
@@ -9,8 +14,9 @@ local nvim_conf_git_log = function()
   return vim.fn.split(text, "\n", true)
 end
 
+
 --- Configure the startup dashboard.
-M.setup = function()
+M.after_load = function()
   local alpha = require("alpha")
   local alpha_dashboard = require("alpha.themes.dashboard")
 

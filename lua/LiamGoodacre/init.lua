@@ -10,7 +10,6 @@ M.setup = function()
     "LiamGoodacre.command",
     "LiamGoodacre.mappings...",
     "LiamGoodacre.language",
-    "LiamGoodacre.dashboard",
   })
 
 end
