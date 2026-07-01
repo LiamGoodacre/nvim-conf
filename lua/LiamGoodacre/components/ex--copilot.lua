@@ -7,7 +7,7 @@ function M.before_load()
 end
 
 
-M.specs = {
+M.plugins = {
   { src = "https://github.com/github/copilot.vim" },
 }
 

@@ -6,7 +6,7 @@ function M.before_load()
 end
 
 
-M.specs = {
+M.plugins = {
   { src = "https://github.com/nvim-tree/nvim-tree.lua" },
   { src = "https://github.com/nvim-tree/nvim-web-devicons" },
 }

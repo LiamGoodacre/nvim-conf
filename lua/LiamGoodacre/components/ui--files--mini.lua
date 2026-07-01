@@ -1,6 +1,6 @@
 local M = {}
 
-M.specs = {
+M.plugins = {
   { src = 'https://github.com/nvim-mini/mini.files', version = 'stable' },
 }
 

@@ -1,6 +1,6 @@
 local M = {}
 
-M.specs = {
+M.plugins = {
   { src = "https://github.com/alexghergh/nvim-tmux-navigation" },
 }
 
