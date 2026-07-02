@@ -1,6 +1,18 @@
 local M = {}
 
-M.setup = function()
+M.before_load = function()
+  vim.g.copilot_enabled = false
+  vim.g.copilot_no_tab_map = true
+  vim.g.copilot_no_maps = true
+end
+
+
+M.plugins = {
+  { src = "https://github.com/github/copilot.vim" },
+}
+
+
+M.after_load = function()
 
   vim.keymap.set("i", "<M-Bslash>", vim.fn["copilot#Suggest"], { silent = true })
 

@@ -6,7 +6,9 @@ M.plugins = {
 
 
 M.after_load = function()
-  require('mini.files').setup({
+  local MiniFiles = require('mini.files')
+
+  MiniFiles.setup({
     -- Customization of shown content
     content = {
       -- Predicate for which file system entries to show
@@ -71,6 +73,12 @@ M.after_load = function()
       win_opt.relativenumber = true
     end,
   })
+
+  vim.keymap.set("n", "<leader>mm", MiniFiles.open)
+
+  vim.keymap.set("n", "<leader>mf", function()
+    MiniFiles.open(vim.api.nvim_buf_get_name(0))
+  end)
 
 end
 

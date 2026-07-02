@@ -33,8 +33,9 @@ M.setup = function()
   vim.opt.spelllang = "en_gb"
   vim.opt.tabstop = 2
   vim.opt.termguicolors = true
-  vim.opt.wildmode:append("list")
   vim.opt.wildmode:append("longest")
+  vim.opt.wildmode:append("list")
+  vim.opt.wildmode:append("noselect")
   vim.opt.wrap = false
 
   vim.diagnostic.config({
