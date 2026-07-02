@@ -6,7 +6,6 @@ M.plugins = {
 }
 
 
--- Apply theme & other visual settings
 M.after_load = function()
 
   require("tokyonight").setup({
