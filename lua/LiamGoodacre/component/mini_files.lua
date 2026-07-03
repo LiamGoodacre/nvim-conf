@@ -24,7 +24,7 @@ M.after_load = function()
     -- Module mappings created only inside explorer.
     -- Use `''` (empty string) to not create one.
     mappings = {
-      close       = 'q',
+      close       = '<C-[>',
       go_in       = 'l',
       go_in_plus  = '<C-m>',
       go_out      = 'h',
