@@ -7,6 +7,10 @@ M.before_load = function()
     command = "silent !tmux set-option -p @is_vim yes",
   })
   -- tmux config will take care of resetting on pane-focus-out
+  vim.api.nvim_create_autocmd({ "VimLeave", "VimSuspend" }, {
+    group = grp,
+    command = "silent !tmux set-option -p -u @is_vim",
+  })
 end
 
 
