@@ -2,14 +2,16 @@ local M = {}
 
 M.before_load = function()
   local grp = vim.api.nvim_create_augroup("tmux_nav_flag", { clear = true })
+
   vim.api.nvim_create_autocmd({ "VimEnter", "VimResume", "FocusGained" }, {
     group = grp,
-    command = "silent !tmux set-option -p @is_vim yes",
+    command = 'silent !tmux set-option -p -t "$TMUX_PANE" @is_vim yes',
   })
+
   -- tmux config will take care of resetting on pane-focus-out
   vim.api.nvim_create_autocmd({ "VimLeave", "VimSuspend" }, {
     group = grp,
-    command = "silent !tmux set-option -p -u @is_vim",
+    command = 'silent !tmux set-option -p -t "$TMUX_PANE" -u @is_vim',
   })
 end
 
