@@ -1,7 +1,7 @@
 local M = {}
 
 M.setup = function()
-  local sessions = require("LiamGoodacre.command.sessions")
+  local sessions = require("LiamGoodacre.component.sessions")
   vim.keymap.set("n", "<leader>sw", sessions.record_session, { desc = "Record session" })
   vim.keymap.set("n", "<leader>se", sessions.switch_session, { desc = "Switch session" })
   vim.keymap.set("n", "<leader>sd", sessions.delete_session, { desc = "Delete session" })

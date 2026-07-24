@@ -1,19 +1,22 @@
 local M = {}
 
+M.plugins = {
+  { src = "https://github.com/smjonas/live-command.nvim" },
+}
+
+
 --- Register local commands and live-command previews.
-M.setup = function()
+M.after_load = function()
 
   local util = require("LiamGoodacre.util")
 
-  util.setup_modules("LiamGoodacre.command...")
-
-  local get_live_commands = function(command_module)
-    return command_module.live_commands or {}
+  local get_live_commands = function(component_module)
+    return component_module.live_commands or {}
   end
 
   require("live-command").setup({
     commands =
-      util.iter_modules("LiamGoodacre.command...")
+      util.iter_modules("LiamGoodacre.component...")
         :map(get_live_commands)
         :fold({
           G = { cmd = "g" },

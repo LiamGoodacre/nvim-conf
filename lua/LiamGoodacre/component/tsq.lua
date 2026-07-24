@@ -74,7 +74,7 @@ M.TSQ_command_preview = function(exec)
   end
 end
 
-M.setup = function()
+M.after_load = function()
   vim.api.nvim_create_user_command("TSQ", M.TSQ_command, {
     range = true,
     nargs = "+",

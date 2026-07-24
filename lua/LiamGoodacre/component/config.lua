@@ -1,6 +1,6 @@
 local M = {}
 
-M.setup = function()
+M.after_load = function()
 
   vim.api.nvim_create_user_command("Config", function()
     vim.cmd.cd(vim.fn.stdpath("config") .. "/lua")
