@@ -41,25 +41,50 @@ local ormolu_on_buffer = function()
   local filename = vim.fn.expand("%:p")
   local filetype = vim.bo.filetype
   if filetype == haskell or filetype == "haskell" then
+    local bufnr = vim.api.nvim_get_current_buf()
+    local winid = vim.api.nvim_get_current_win()
+    local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
     -- track the cursor position so we can return to it after formatting
-    local cursor = vim.api.nvim_win_get_cursor(0)
+    local cursor = vim.api.nvim_win_get_cursor(winid)
     -- As this is pre-write, we run ormolu directly on the buffer content.
-    vim.cmd({
-      cmd = "!",
-      range = { 1, vim.api.nvim_buf_line_count(0) },
-      args = { "ormolu", "--stdin-input-file", vim.fn.shellescape(filename) },
-      mods = { silent = true },
-    })
+    local result = vim.system(
+      { "ormolu", "--stdin-input-file", filename },
+      { stdin = lines, text = true }
+    ):wait()
+
+    if result.code ~= 0 or result.signal ~= 0 then
+      vim.notify(
+        string.format(
+          "ormolu failed (exit code %d, signal %d):\n%s",
+          result.code,
+          result.signal,
+          result.stderr
+        ),
+        vim.log.levels.ERROR
+      )
+      return
+    end
+
+    if not vim.api.nvim_buf_is_valid(bufnr) then
+      return
+    end
+
+    -- Remove the final line ending without dropping blank lines.
+    local formatted = vim.split(result.stdout:gsub("\n$", ""), "\n", { plain = true })
+    if not vim.deep_equal(lines, formatted) then
+      vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, formatted)
+    end
+
     -- return the cursor to where it was before formatting,
     -- note that the position may no-longer be valid so we
     -- must check that the cursor is still within the buffer
-    if vim.api.nvim_buf_is_valid(0) then
-      local line_count = vim.api.nvim_buf_line_count(0)
+    if vim.api.nvim_win_is_valid(winid) and vim.api.nvim_win_get_buf(winid) == bufnr then
+      local line_count = vim.api.nvim_buf_line_count(bufnr)
       if cursor[1] <= line_count then
-        vim.api.nvim_win_set_cursor(0, cursor)
+        vim.api.nvim_win_set_cursor(winid, cursor)
       else
         -- if the cursor is out of bounds, move it to the last line
-        vim.api.nvim_win_set_cursor(0, { line_count, 0 })
+        vim.api.nvim_win_set_cursor(winid, { line_count, 0 })
       end
     end
   end
