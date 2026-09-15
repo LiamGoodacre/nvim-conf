@@ -3,7 +3,7 @@ return {
   setup = function()
     vim.lsp.config("starpls", {
       filetypes = { "bzl", "bazel", "bazelrc" },
-      root_dir = require("lspconfig.util").root_pattern("WORKSPACE", "WORKSPACE.bazel", ".git"),
+      root_markers = { "WORKSPACE", "WORKSPACE.bazel", ".git" },
     })
   end,
 }
