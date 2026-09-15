@@ -48,6 +48,7 @@ local ormolu_on_buffer = function()
       cmd = "!",
       range = { 1, vim.api.nvim_buf_line_count(0) },
       args = { "ormolu", "--stdin-input-file", vim.fn.shellescape(filename) },
+      mods = { silent = true },
     })
     -- return the cursor to where it was before formatting,
     -- note that the position may no-longer be valid so we
