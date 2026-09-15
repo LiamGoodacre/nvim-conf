@@ -31,7 +31,7 @@ local update_tags = function()
           return
         end
 
-        vim.notify("tags updated via hasktags-parallel", vim.log.levels.INFO)
+        -- vim.notify("tags updated via hasktags-parallel", vim.log.levels.OFF)
       end,
     })
   end)
