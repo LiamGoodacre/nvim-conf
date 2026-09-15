@@ -44,7 +44,11 @@ local ormolu_on_buffer = function()
     -- track the cursor position so we can return to it after formatting
     local cursor = vim.api.nvim_win_get_cursor(0)
     -- As this is pre-write, we run ormolu directly on the buffer content.
-    vim.cmd(":%! ormolu --stdin-input-file " .. vim.fn.shellescape(filename))
+    vim.cmd({
+      cmd = "!",
+      range = { 1, vim.api.nvim_buf_line_count(0) },
+      args = { "ormolu", "--stdin-input-file", vim.fn.shellescape(filename) },
+    })
     -- return the cursor to where it was before formatting,
     -- note that the position may no-longer be valid so we
     -- must check that the cursor is still within the buffer
