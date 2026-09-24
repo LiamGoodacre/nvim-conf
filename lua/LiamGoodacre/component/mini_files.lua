@@ -64,6 +64,37 @@ M.after_load = function()
     },
   })
 
+  -- Continue with full path of entry under cursor
+  local with_path = function(cont)
+    return function()
+      local path = (MiniFiles.get_fs_entry() or {}).path
+      if path == nil then
+        return vim.notify("Cursor is not on valid entry")
+      end
+      return cont(path)
+    end
+  end
+
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "MiniFilesBufferCreate",
+    callback = function(args)
+      local b = args.data.buf_id
+
+      vim.keymap.set("n", "Y", with_path(function(path)
+        vim.fn.setreg(vim.v.register, path)
+      end), { buffer = b, desc = "Yank path" })
+
+      vim.keymap.set("n", "<C-y>", with_path(function(path)
+        vim.fn.setreg("+", path)
+      end), { buffer = b, desc = "Yank path to system clipboard" })
+
+      vim.keymap.set("n", "<C-g>", with_path(function(path)
+        vim.notify(path)
+      end), { buffer = b, desc = "Notify path" })
+
+    end,
+  })
+
   vim.api.nvim_create_autocmd('User', {
     pattern = 'MiniFilesWindowUpdate',
     callback = function(args)
