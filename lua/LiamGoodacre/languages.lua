@@ -34,7 +34,7 @@ local treesitter_parsers = {
   "scss",
   "sql",
   "terraform",
-  "tmux",
+  -- "tmux",
   "toml",
   "typescript",
   "vim",
