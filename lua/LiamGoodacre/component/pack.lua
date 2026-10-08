@@ -1,5 +1,26 @@
 local M = {}
 
+---@param p vim.pack.PlugData
+---@return boolean
+local is_active = function(p) return p.active end
+
+
+---@param p vim.pack.PlugData
+---@return boolean
+local is_not_active = function(p) return not p.active end
+
+
+---@param p vim.pack.PlugData
+---@return string
+local get_spec_name = function(p) return p.spec.name end
+
+
+---@return Iter
+local iter_plugins = function()
+  return vim.iter(vim.pack.get(nil, { info = false }))
+end
+
+
 ---@param path string
 ---@return nil|string
 local read_file = function(path)
@@ -34,26 +55,17 @@ local sync = function(plugins)
     vim.system({ "git", "remote", "set-url", "origin", p.spec.src }, { cwd = p.path }):wait()
   end)
 
-  local names = vim.iter(plugins):map(function(p) return p.spec.name end):totable()
+  local names = vim.iter(plugins):map(get_spec_name):totable()
   vim.pack.update(names, { target = "lockfile", force = true })
-end
-
-
----@return vim.pack.PlugData[]
-local active_plugins = function()
-  return
-    vim.iter(vim.pack.get(nil, { info = false }))
-      :filter(function(p) return p.active end)
-      :totable()
 end
 
 
 --- Runs before plugin/ files are sourced, so stale plugins are fixed first.
 M.after_register = function()
-  local stale = vim.iter(active_plugins()):filter(is_stale):totable()
+  local stale = iter_plugins():filter(is_active):filter(is_stale):totable()
   if #stale == 0 then return end
 
-  vim.notify("Syncing packages to lockfile: " .. vim.iter(stale):map(function(p) return p.spec.name end):join(", "))
+  vim.notify("Syncing packages to lockfile: " .. vim.iter(stale):map(get_spec_name):join(", "))
   sync(stale)
 end
 
@@ -71,15 +83,15 @@ M.after_load = function()
 
 
   vim.api.nvim_create_user_command("PackSync", function()
-    sync(active_plugins())
+    sync(iter_plugins():filter(is_active):totable())
   end, { desc = "Sync packages" })
 
 
   vim.api.nvim_create_user_command("PackListActive", function()
     local actives =
-      vim.iter(vim.pack.get())
-        :filter(function(p) return p.active end)
-        :map(function(p) return p.spec.name end)
+      iter_plugins()
+        :filter(is_active)
+        :map(get_spec_name)
         :totable()
 
     if #actives == 0 then
@@ -93,9 +105,9 @@ M.after_load = function()
 
   vim.api.nvim_create_user_command("PackListInactive", function()
     local inactives =
-      vim.iter(vim.pack.get())
-        :filter(function(p) return not p.active end)
-        :map(function(p) return p.spec.name end)
+      iter_plugins()
+        :filter(is_not_active)
+        :map(get_spec_name)
         :totable()
 
     if #inactives == 0 then
@@ -110,8 +122,8 @@ M.after_load = function()
   vim.api.nvim_create_user_command("PackPrune", function()
     local inactives =
       vim.iter(vim.pack.get())
-        :filter(function(p) return not p.active end)
-        :map(function(p) return p.spec.name end)
+        :filter(is_not_active)
+        :map(get_spec_name)
         :totable()
 
     if #inactives == 0 then
