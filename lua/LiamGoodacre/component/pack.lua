@@ -12,6 +12,11 @@ M.after_load = function()
   end, { desc = "Upgrade packages" })
 
 
+  vim.api.nvim_create_user_command("PackSync", function()
+    vim.pack.update(nil, {target = "lockfile", force = true})
+  end, { desc = "Sync packages" })
+
+
   vim.api.nvim_create_user_command("PackListActive", function()
     local actives =
       vim.iter(vim.pack.get())
