@@ -8,6 +8,7 @@ M.nominalise = function(spec)
 end
 
 M.before_load = function(s) return s.before_load end
+M.after_register = function(s) return s.after_register end
 M.after_load = function(s) return s.after_load end
 M.plugins = function(m) return m.plugins end
 
@@ -33,6 +34,10 @@ M.setup = function()
 
   -- step 1: tell pack what plugins exist
   vim.pack.add(plugins, { load = false, confirm = false })
+
+  util.iter_modules("LiamGoodacre.component...")
+    :map(M.after_register)
+    :each(util.call)
 
   -- step 2: actually load the plugins
   vim.pack.add(plugins, { load = true, confirm = false })

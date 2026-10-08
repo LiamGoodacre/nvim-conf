@@ -1,5 +1,63 @@
 local M = {}
 
+---@param path string
+---@return nil|string
+local read_file = function(path)
+  local fd = io.open(path, "r")
+  if not fd then return nil end
+  local contents = fd:read("*a")
+  fd:close()
+  return contents
+end
+
+
+--- Whether a plugin's clone has drifted from its lockfile entry, e.g. after
+--- switching config branches: wrong revision checked out or `origin` pointing
+--- at a different source. Reads .git directly to keep startup cheap.
+---@param p vim.pack.PlugData
+---@return boolean
+local is_stale = function(p)
+  local git_dir = p.path .. "/.git"
+  local head = vim.trim(read_file(git_dir .. "/HEAD") or "")
+  local config = read_file(git_dir .. "/config") or ""
+  local origin = config:match('%[remote "origin"%][^%[]-url%s*=%s*(%S+)')
+  return head ~= p.rev or origin ~= p.spec.src
+end
+
+
+--- Checkout lockfile revisions. vim.pack only fixes `origin` when the spec src
+--- differs from the lockfile src, so a branch switch that changes both leaves
+--- the clone fetching from the old remote; repoint it first.
+---@param plugins vim.pack.PlugData[]
+local sync = function(plugins)
+  vim.iter(plugins):each(function(p)
+    vim.system({ "git", "remote", "set-url", "origin", p.spec.src }, { cwd = p.path }):wait()
+  end)
+
+  local names = vim.iter(plugins):map(function(p) return p.spec.name end):totable()
+  vim.pack.update(names, { target = "lockfile", force = true })
+end
+
+
+---@return vim.pack.PlugData[]
+local active_plugins = function()
+  return
+    vim.iter(vim.pack.get(nil, { info = false }))
+      :filter(function(p) return p.active end)
+      :totable()
+end
+
+
+--- Runs before plugin/ files are sourced, so stale plugins are fixed first.
+M.after_register = function()
+  local stale = vim.iter(active_plugins()):filter(is_stale):totable()
+  if #stale == 0 then return end
+
+  vim.notify("Syncing packages to lockfile: " .. vim.iter(stale):map(function(p) return p.spec.name end):join(", "))
+  sync(stale)
+end
+
+
 M.after_load = function()
 
   vim.api.nvim_create_user_command("PackUpdate", function()
@@ -13,7 +71,7 @@ M.after_load = function()
 
 
   vim.api.nvim_create_user_command("PackSync", function()
-    vim.pack.update(nil, {target = "lockfile", force = true})
+    sync(active_plugins())
   end, { desc = "Sync packages" })
 
 
